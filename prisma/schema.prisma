@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -13,6 +13,37 @@ model TipoRacismo {
   descricao   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  localizacoes Localizacao[]
+  avaliacoes   Avaliacao[]
+}
+
+model Localizacao {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String
+  bairro      String?
+  rua         String?
+  latitude    Float
+  longitude   Float
+  tipoRacismo TipoRacismo @relation(fields: [tipoRacismoId], references: [id])
+  tipoRacismoId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  respostas   Resposta[]
+
+  @@index([tipoRacismoId])
+}
+
+model Resposta {
+  id          Int      @id @default(autoincrement())
+  comentario  String
+  usuario     String
+  localizacao  Localizacao @relation(fields: [localizacaoId], references: [id])
+  localizacaoId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([localizacaoId])
 }
 
 model Avaliacao {

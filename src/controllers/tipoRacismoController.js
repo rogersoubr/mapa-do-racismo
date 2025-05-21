@@ -1,16 +1,13 @@
-import TipoRacismo from '../models/tipoRacismo.js';
+import { TipoRacismo } from '../models/tipoRacismo.js';
 
-export default {
+export const tipoRacismoController = {
   // Listar todos os tipos de racismo
   async index(req, res) {
     try {
-      const tipos = await TipoRacismo.findAll({
-        where: { ativo: true },
-        order: [['nome', 'ASC']]
-      });
+      const tipos = await TipoRacismo.listar();
       return res.json(tipos);
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao listar tipos de racismo:', error);
       return res.status(500).json({ error: 'Erro ao listar tipos de racismo' });
     }
   },
@@ -19,7 +16,7 @@ export default {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const tipo = await TipoRacismo.findByPk(id);
+      const tipo = await TipoRacismo.buscarPorId(parseInt(id));
       
       if (!tipo) {
         return res.status(404).json({ error: 'Tipo de racismo não encontrado' });
@@ -27,7 +24,7 @@ export default {
       
       return res.json(tipo);
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao buscar tipo de racismo:', error);
       return res.status(500).json({ error: 'Erro ao buscar tipo de racismo' });
     }
   },
@@ -35,21 +32,21 @@ export default {
   // Criar um novo tipo de racismo
   async store(req, res) {
     try {
-      const { nome, descricao } = req.body;
+      const { descricao } = req.body;
       
-      if (!nome) {
-        return res.status(400).json({ error: 'Nome é obrigatório' });
+      if (!descricao) {
+        return res.status(400).json({ error: 'Descrição é obrigatória' });
+      }
+
+      const tipoExistente = await TipoRacismo.buscarPorDescricao(descricao);
+      if (tipoExistente) {
+        return res.status(400).json({ error: 'Tipo de racismo já existe' });
       }
       
-      const tipo = await TipoRacismo.create({
-        nome,
-        descricao,
-        ativo: true
-      });
-      
-      return res.status(201).json(tipo);
+      const novoTipo = await TipoRacismo.criar({ descricao });
+      return res.status(201).json(novoTipo);
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao criar tipo de racismo:', error);
       return res.status(500).json({ error: 'Erro ao criar tipo de racismo' });
     }
   },
@@ -58,43 +55,42 @@ export default {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { nome, descricao, ativo } = req.body;
+      const { descricao } = req.body;
       
-      const tipo = await TipoRacismo.findByPk(id);
-      
+      if (!descricao) {
+        return res.status(400).json({ error: 'Descrição é obrigatória' });
+      }
+
+      const tipo = await TipoRacismo.buscarPorId(parseInt(id));
       if (!tipo) {
         return res.status(404).json({ error: 'Tipo de racismo não encontrado' });
       }
-      
-      await tipo.update({
-        nome,
-        descricao,
-        ativo
-      });
-      
-      return res.json(tipo);
+
+      const tipoAtualizado = await TipoRacismo.atualizar(parseInt(id), { descricao });
+      return res.json(tipoAtualizado);
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao atualizar tipo de racismo:', error);
       return res.status(500).json({ error: 'Erro ao atualizar tipo de racismo' });
     }
   },
 
-  // Excluir um tipo de racismo (soft delete)
+  // Deletar um tipo de racismo
   async delete(req, res) {
     try {
       const { id } = req.params;
       
-      const tipo = await TipoRacismo.findByPk(id);
-      
+      const tipo = await TipoRacismo.buscarPorId(parseInt(id));
       if (!tipo) {
         return res.status(404).json({ error: 'Tipo de racismo não encontrado' });
       }
-      await tipo.save();
-      
-      return res.json({ message: 'Tipo de racismo desativado com sucesso' });
+
+      await TipoRacismo.deletar(parseInt(id));
+      return res.status(204).send();
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: 'Erro ao desativar tipo de racismo' });
+      console.error('Erro ao deletar tipo de racismo:', error);
+      return res.status(500).json({ error: 'Erro ao deletar tipo de racismo' });
     }
   }
 };
+
+export default tipoRacismoController;

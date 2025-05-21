@@ -1,45 +1,49 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
-import config from '../config/config.js';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
-const sequelize = new Sequelize(config.development);
+const TipoRacismo = {
+  async listar() {
+    return await prisma.tipoRacismo.findMany({
+      orderBy: {
+        createdAt: 'asc'
+      }
+    });
+  },
 
-class TipoRacismo extends Model {}
+  async criar(dados) {
+    return await prisma.tipoRacismo.create({
+      data: {
+        descricao: dados.descricao
+      }
+    });
+  },
 
-TipoRacismo.init({
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+  async atualizar(id, dados) {
+    return await prisma.tipoRacismo.update({
+      where: { id },
+      data: {
+        descricao: dados.descricao
+      }
+    });
   },
-  nome: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-    unique: true
+
+  async deletar(id) {
+    return await prisma.tipoRacismo.delete({
+      where: { id }
+    });
   },
-  descricao: {
-    type: DataTypes.TEXT,
-    allowNull: true
+
+  async buscarPorId(id) {
+    return await prisma.tipoRacismo.findUnique({
+      where: { id }
+    });
   },
-  ativo: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    field: 'created_at'
-  },
-  updatedAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    field: 'updated_at'
+
+  async buscarPorDescricao(descricao) {
+    return await prisma.tipoRacismo.findUnique({
+      where: { descricao }
+    });
   }
-}, {
-  sequelize,
-  modelName: 'TipoRacismo',
-  tableName: 'tipo_racismo',
-  timestamps: true,
-  underscored: true
-});
+};
 
 export default TipoRacismo;
