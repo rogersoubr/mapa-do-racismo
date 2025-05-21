@@ -15,3 +15,15 @@ model TipoRacismo {
   updatedAt   DateTime @updatedAt
 }
 
+model Avaliacao {
+  id          Int      @id @default(autoincrement())
+  usuario     String
+  comentario  String
+  nota        Int      @default(0)
+  tipoRacismo TipoRacismo @relation(fields: [tipoRacismoId], references: [id])
+  tipoRacismoId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([tipoRacismoId])
+}
