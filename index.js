@@ -5,6 +5,9 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+import tipoRacismoRoutes from './src/routes/tipoRacismoRoutes.js';
+import denunciaRoutes from './src/routes/denunciasRoutes.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -68,10 +71,10 @@ app.use(cors());
 app.use(express.json());
 
 // Importa as rotas
-import tipoRacismoRoutes from './src/routes/tipoRacismoRoutes.js';
 
 // Rotas
-app.use('/api', tipoRacismoRoutes);  // Tipo de rota a definir  Realiza exportaçao das rotas 
+app.use('/api', tipoRacismoRoutes);
+app.use('/denuncias', denunciaRoutes);
 
 app.listen(PORT, () => {
     console.log(`✅ Servidor rodando na porta ${PORT}`);
