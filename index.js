@@ -14,8 +14,6 @@ import respostaRoutes from './src/routes/resposta.routes.js';
 import denunciaRoutes from './src/routes/denuncias.routes.js';
 import ocorrenciasRoutes from './src/routes/ocorrencias.routes.js';
 
-
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -78,6 +76,11 @@ console.log('\n🚀 Iniciando servidor...\n');
 app.use(cors());
 app.use(express.json());
 
+// Adicionei aqui a rota raiz para evitar "Cannot GET /"
+app.get('/', (req, res) => {
+  res.send('API Mapa do Racismo rodando!');
+});
+
 // Rotas
 app.use('/api/tipos-racismo', tipoRacismoRoutes);
 app.use('/api/localizacoes', localizacoesRoutes);
@@ -85,7 +88,6 @@ app.use('/api/avaliacoes', avaliacaoRoutes);
 app.use('/api/respostas', respostaRoutes);
 app.use('/api/denuncias', denunciaRoutes);
 app.use('/api/ocorrencias', ocorrenciasRoutes);
-
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
