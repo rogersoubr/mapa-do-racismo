@@ -1,5 +1,5 @@
 import express from 'express';
-import tipoRacismoController from '../controllers/tipoRacismoController.js';
+import tipoRacismoController from '../controllers/tipoRacismo.controller.js';
 
 const router = express.Router();
 

@@ -22,5 +22,8 @@ nav:
       - Tipos de Racismo: api/endpoints/tipos-racismo.md
       - Respostas: api/endpoints/respostas.md
       - Avaliações: api/endpoints/avaliacoes.md
+      - Denuncias: api/endpoints/denuncias.md
+      - Ocorrencias: api/endpoints/ocorrencias.md
+      
   - Desenvolvimento:
     - Deploy: desenvolvimento/deploy.md

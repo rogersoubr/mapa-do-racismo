@@ -7,11 +7,13 @@ import { dirname, join } from 'path';
 import swaggerDocs from './src/config/swagger.js';
 
 // Importa as rotas
-import tipoRacismoRoutes from './src/routes/tipoRacismoRoutes.js';
-import localizacoesRoutes from './src/routes/localizacaoRoutes.js';
-import avaliacaoRoutes from './src/routes/avaliacaoRoutes.js';
-import respostaRoutes from './src/routes/respostaRoutes.js';
-import denunciaRoutes from './src/routes/denunciasRoutes.js';
+import tipoRacismoRoutes from './src/routes/tipoRacismo.routes.js';
+import localizacoesRoutes from './src/routes/localizacao.routes.js';
+import avaliacaoRoutes from './src/routes/avaliacao.routes.js';
+import respostaRoutes from './src/routes/resposta.routes.js';
+import denunciaRoutes from './src/routes/denuncias.routes.js';
+import ocorrenciasRoutes from './src/routes/ocorrencias.routes.js';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -35,7 +37,7 @@ if (missingVars.length > 0) {
     console.error('💥 Erro: Variáveis obrigatórias faltando em produção!');
     process.exit(1);
   } else {
-    console.warn('⚠️  Variáveis faltando em desenvolvimento. Usando valores padrão.');
+    console.warn('⚠️ Variáveis faltando em desenvolvimento. Usando valores padrão.');
   }
 }
 
@@ -81,6 +83,7 @@ app.use('/api/localizacoes', localizacoesRoutes);
 app.use('/api/avaliacoes', avaliacaoRoutes);
 app.use('/api/respostas', respostaRoutes);
 app.use('/api/denuncias', denunciaRoutes);
+app.use('/api/ocorrencias', ocorrenciasRoutes);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {

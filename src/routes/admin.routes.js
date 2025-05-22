@@ -1,7 +1,7 @@
 // Importando o pacote 'express' para criar as rotas
 import express from 'express';
 // Importando o controlador que contém as funções de CRUD
-import adminController from '../controllers/adminController'; 
+import adminController from '../controllers/admin.controller.js'; 
 
 const router = express.Router();  // Criando um novo roteador do Express
 

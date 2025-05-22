@@ -5,7 +5,7 @@ import {
   buscarAvaliacaoPorId,
   atualizarAvaliacao,
   deletarAvaliacao
-} from '../controllers/avaliacoes.js';
+} from '../controllers/avaliacoes.controller.js';
 
 const router = express.Router();
 

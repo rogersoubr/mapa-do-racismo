@@ -162,3 +162,108 @@ describe('Avaliacoes', () => {
     expect(res.statusCode).toBe(204);
   });
 });
+
+describe('Denuncias', () => {
+  let denunciaId;
+
+  it('POST /api/denuncia deve criar denúncia', async () => {
+    const res = await request(app)
+      .post('/api/denuncia')
+      .send({
+        descricao: 'Denúncia de injúria racial',
+        localizacao: 'Praça Central'
+      });
+    expect(res.statusCode).toBe(201);
+    expect(res.body.descricao).toBe('Denúncia de injúria racial');
+    denunciaId = res.body.id;
+  });
+
+  it('GET /api/denuncia deve retornar lista', async () => {
+    const res = await request(app).get('/api/denuncia');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it('GET /api/denuncia/:id deve retornar denúncia', async () => {
+    const res = await request(app).get(`/api/denuncia/${denunciaId}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.id).toBe(denunciaId);
+  });
+
+  it('PUT /api/denuncia/:id deve atualizar denúncia', async () => {
+    const res = await request(app)
+      .put(`/api/denuncia/${denunciaId}`)
+      .send({
+        descricao: 'Denúncia atualizada',
+        localizacao: 'Prefeitura'
+      });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.descricao).toBe('Denúncia atualizada');
+  });
+
+  it('DELETE /api/denuncia/:id deve remover denúncia', async () => {
+    const res = await request(app).delete(`/api/denuncia/${denunciaId}`);
+    expect(res.statusCode).toBe(204);
+  });
+});
+
+describe('Ocorrencias', () => {
+  let ocorrenciaId, localizacaoId, tipoRacismoId;
+
+  beforeAll(async () => {
+    // Cria um tipo de racismo e uma localização para usar na ocorrência
+    const resTipo = await request(app).post('/api/tipos-racismo').send({ descricao: 'Para Ocorrencia' });
+    tipoRacismoId = resTipo.body.id;
+
+    const resLoc = await request(app).post('/api/localizacoes').send({
+      nome: 'Loc para Ocorrencia',
+      descricao: 'desc',
+      bairro: 'bairro',
+      rua: 'rua',
+      latitude: -23.5,
+      longitude: -46.6,
+      tipoRacismoId
+    });
+    localizacaoId = resLoc.body.id;
+  });
+
+  it('POST /api/ocorrencias deve criar ocorrência', async () => {
+    const res = await request(app)
+      .post('/api/ocorrencias')
+      .send({
+        descricao: 'Ocorrência Teste',
+        localizacaoId,
+        tipoRacismoId,
+        status: 'aberta'
+      });
+    expect(res.statusCode).toBe(201);
+    expect(res.body.descricao).toBe('Ocorrência Teste');
+    ocorrenciaId = res.body.id;
+  });
+
+  it('GET /api/ocorrencias deve retornar lista', async () => {
+    const res = await request(app).get('/api/ocorrencias');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it('GET /api/ocorrencias/:id deve retornar ocorrência', async () => {
+    const res = await request(app).get(`/api/ocorrencias/${ocorrenciaId}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.id).toBe(ocorrenciaId);
+  });
+
+  it('PUT /api/ocorrencias/:id deve atualizar ocorrência', async () => {
+    const res = await request(app)
+      .put(`/api/ocorrencias/${ocorrenciaId}`)
+      .send({ descricao: 'Ocorrência Atualizada' });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.descricao).toBe('Ocorrência Atualizada');
+  });
+
+  it('DELETE /api/ocorrencias/:id deve remover ocorrência', async () => {
+    const res = await request(app).delete(`/api/ocorrencias/${ocorrenciaId}`);
+    expect(res.statusCode).toBe(204);
+  });
+});
+

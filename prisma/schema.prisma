@@ -22,6 +22,7 @@ model Localizacao {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   respostas   Resposta[]
+  ocorrencias  Ocorrencia[]
 
   @@index([tipoRacismoId])
 }
@@ -33,7 +34,26 @@ model TipoRacismo {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   localizacoes Localizacao[]
+  ocorrencias  Ocorrencia[]
   avaliacoes   Avaliacao[]
+}
+
+model Ocorrencia {
+  id             Int           @id @default(autoincrement())
+  descricao      String
+  data           DateTime      @default(now())
+  status         String        @default("aberta")
+  localizacaoId  Int
+  localizacao    Localizacao   @relation(fields: [localizacaoId], references: [id])
+  tipoRacismoId  Int
+  tipoRacismo    TipoRacismo   @relation(fields: [tipoRacismoId], references: [id])
+  respostas      Resposta[]
+  avaliacoes     Avaliacao[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([localizacaoId])
+  @@index([tipoRacismoId])
 }
 
 model Resposta {
@@ -42,10 +62,13 @@ model Resposta {
   usuario     String
   localizacao  Localizacao @relation(fields: [localizacaoId], references: [id])
   localizacaoId Int
+  ocorrencia    Ocorrencia  @relation(fields: [ocorrenciaId], references: [id])
+  ocorrenciaId  Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([localizacaoId])
+  @@index([ocorrenciaId])
 }
 
 model Avaliacao {
@@ -55,10 +78,13 @@ model Avaliacao {
   nota        Int      @default(0)
   tipoRacismo TipoRacismo @relation(fields: [tipoRacismoId], references: [id])
   tipoRacismoId Int
+  ocorrencia    Ocorrencia  @relation(fields: [ocorrenciaId], references: [id])
+  ocorrenciaId  Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([tipoRacismoId])
+  @@index([ocorrenciaId])
 }
 
 model Denuncia {

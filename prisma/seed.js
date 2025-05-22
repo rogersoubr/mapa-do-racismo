@@ -13,6 +13,8 @@ async function main() {
   await prisma.avaliacao.deleteMany({});
   await prisma.localizacao.deleteMany({});
   await prisma.tipoRacismo.deleteMany({});
+  await prisma.denuncia.deleteMany({});
+  await prisma.ocorrencias.deleteMany({});
 
   // Criar tipos de racismo
   console.log('📝 Criando tipos de racismo...');
@@ -113,6 +115,32 @@ async function main() {
         usuario: nomes[nomeIndex],
         comentario: `Avaliação sobre o tipo de racismo: ${tipos[tipoIndex].descricao}`,
         nota: Math.floor(Math.random() * 5) + 1, // Nota de 1 a 5
+        tipoRacismo: {
+          connect: { id: tipos[tipoIndex].id }
+        },
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    });
+  }
+
+  // Criar ocorrências
+  console.log('🚨 Criando ocorrências...');
+  const statusList = ['aberta', 'em análise', 'fechada'];
+  const ocorrencias = [];
+
+  for (let i = 0; i < 15; i++) {
+    const localizacaoIndex = Math.floor(Math.random() * localizacoes.length);
+    const tipoIndex = Math.floor(Math.random() * tipos.length);
+    const statusIndex = Math.floor(Math.random() * statusList.length);
+
+    const ocorrencia = await prisma.ocorrencia.create({
+      data: {
+        descricao: `Ocorrência de ${tipos[tipoIndex].descricao} no bairro ${localizacoes[localizacaoIndex].bairro}`,
+        status: statusList[statusIndex],
+        localizacao: {
+          connect: { id: localizacoes[localizacaoIndex].id }
+        },
         tipoRacismo: {
           connect: { id: tipos[tipoIndex].id }
         },
