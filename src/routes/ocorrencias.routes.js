@@ -72,8 +72,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Ocorrencia'
  */
-
-router.post('/ocorrencias', criarOcorrencia());
+router.post('/ocorrencias', criarOcorrencia);
 
 /**
  * @swagger
@@ -92,8 +91,7 @@ router.post('/ocorrencias', criarOcorrencia());
  *               items:
  *                 $ref: '#/components/schemas/Ocorrencia'
  */
-
-router.get('/ocorrencias', listarOcorrencias());
+router.get('/ocorrencias', listarOcorrencias);
 
 /**
  * @swagger
@@ -131,8 +129,7 @@ router.get('/ocorrencias', listarOcorrencias());
  *             schema:
  *               $ref: '#/components/schemas/Ocorrencia'
  */
-
-router.put('/ocorrencias/:id', atualizarOcorrencia());
+router.put('/ocorrencias/:id', atualizarOcorrencia);
 
 /**
  * @swagger
@@ -151,8 +148,7 @@ router.put('/ocorrencias/:id', atualizarOcorrencia());
  *       '204':
  *         description: Ocorrência removida com sucesso
  */
-
-router.delete('/ocorrencias/:id', removerOcorrencia());
+router.delete('/ocorrencias/:id', removerOcorrencia);
 
 /**
  * @swagger
@@ -177,7 +173,6 @@ router.delete('/ocorrencias/:id', removerOcorrencia());
  *       '404':
  *         description: Ocorrência não encontrada
  */
-
-router.get('/ocorrencias/:id', buscarOcorrenciaPorId());
+router.get('/ocorrencias/:id', buscarOcorrenciaPorId);
 
 export default router;
