@@ -63,7 +63,9 @@ export const buscarRespostaPorId = async (req, res) => {
     const { id } = req.params;
     
     const resposta = await prisma.resposta.findUnique({
-      where: { id: parseInt(id) },
+      where: {
+        id: parseInt(id)
+      },
       include: {
         localizacao: true
       }

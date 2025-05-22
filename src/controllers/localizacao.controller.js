@@ -15,13 +15,12 @@ export const listarLocalizacoes = async (req, res) => {
         },
         _count: {
           select: {
-            respostas: true,
-            avaliacoes: true
+            respostas: true
           }
         }
       },
       orderBy: {
-        dataCriacao: 'desc'
+        createdAt: 'desc'
       }
     });
     
@@ -45,10 +44,7 @@ export const criarLocalizacao = async (req, res) => {
       longitude, 
       tipoRacismoId, 
       bairro, 
-      rua,
-      cidade = 'São Paulo',
-      estado = 'SP',
-      cep = ''
+      rua
     } = req.body;
     
     // Validação dos campos obrigatórios
@@ -88,9 +84,6 @@ export const criarLocalizacao = async (req, res) => {
         longitude: lng,
         bairro: bairro ? bairro.trim() : null,
         rua: rua ? rua.trim() : null,
-        cidade: cidade.trim(),
-        estado: estado.trim(),
-        cep: cep ? cep.trim() : null,
         tipoRacismoId: parseInt(tipoRacismoId)
       },
       include: {
@@ -102,8 +95,7 @@ export const criarLocalizacao = async (req, res) => {
         },
         _count: {
           select: {
-            respostas: true,
-            avaliacoes: true
+            respostas: true
           }
         }
       }
@@ -130,10 +122,7 @@ export const atualizarLocalizacao = async (req, res) => {
       longitude, 
       tipoRacismoId, 
       bairro, 
-      rua,
-      cidade,
-      estado,
-      cep
+      rua
     } = req.body;
 
     // Verificar se a localização existe
@@ -192,9 +181,6 @@ export const atualizarLocalizacao = async (req, res) => {
         longitude: lng,
         bairro: bairro !== undefined ? (bairro ? bairro.trim() : null) : localizacaoExistente.bairro,
         rua: rua !== undefined ? (rua ? rua.trim() : null) : localizacaoExistente.rua,
-        cidade: cidade !== undefined ? cidade.trim() : localizacaoExistente.cidade,
-        estado: estado !== undefined ? estado.trim() : localizacaoExistente.estado,
-        cep: cep !== undefined ? (cep ? cep.trim() : null) : localizacaoExistente.cep,
         tipoRacismoId: tipoRacismoId ? parseInt(tipoRacismoId) : localizacaoExistente.tipoRacismoId
       },
       include: {
@@ -206,8 +192,7 @@ export const atualizarLocalizacao = async (req, res) => {
         },
         _count: {
           select: {
-            respostas: true,
-            avaliacoes: true
+            respostas: true
           }
         }
       }
@@ -234,8 +219,7 @@ export const deletarLocalizacao = async (req, res) => {
       include: {
         _count: {
           select: {
-            respostas: true,
-            avaliacoes: true
+            respostas: true
           }
         }
       }
@@ -279,20 +263,12 @@ export const buscarLocalizacaoPorId = async (req, res) => {
         },
         respostas: {
           orderBy: {
-            dataCriacao: 'desc'
-          },
-          include: {
-            _count: {
-              select: {
-                avaliacoes: true
-              }
-            }
+            createdAt: 'desc'
           }
         },
         _count: {
           select: {
-            respostas: true,
-            avaliacoes: true
+            respostas: true
           }
         }
       }
@@ -303,7 +279,7 @@ export const buscarLocalizacaoPorId = async (req, res) => {
         error: 'Localização não encontrada' 
       });
     }
-
+    
     res.json(localizacao);
   } catch (error) {
     console.error('Erro ao buscar localização:', error);
@@ -332,13 +308,12 @@ export const buscarLocalizacoesPorTipo = async (req, res) => {
         },
         _count: {
           select: {
-            respostas: true,
-            avaliacoes: true
+            respostas: true
           }
         }
       },
       orderBy: {
-        dataCriacao: 'desc'
+        createdAt: 'desc'
       }
     });
 

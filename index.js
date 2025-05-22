@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import swaggerDocs from './src/config/swagger.js';
 
 // Importa as rotas
 import tipoRacismoRoutes from './src/routes/tipoRacismoRoutes.js';
@@ -16,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Carrega as variáveis de ambiente
-dotenv.config();
+dotenv.config({ path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env' });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -81,12 +82,19 @@ app.use('/api/avaliacoes', avaliacaoRoutes);
 app.use('/api/respostas', respostaRoutes);
 app.use('/api/denuncias', denunciaRoutes);
 
-app.listen(PORT, () => {
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
     console.log(`✅ Servidor rodando na porta ${PORT}`);
     console.log(`🌐 Acesse: http://localhost:${PORT}`);
-});
+    
+    // Inicializa a documentação Swagger
+    swaggerDocs(app, PORT);
+  });
+}
 
 // Tratamento de erros não capturados
 process.on('unhandledRejection', (reason, promise) => {
   console.error('❌ Erro não tratado:', reason);
 });
+
+export default app;

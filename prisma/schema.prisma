@@ -36,23 +36,6 @@ model TipoRacismo {
   avaliacoes   Avaliacao[]
 }
 
-model Localizacao {
-  id          Int      @id @default(autoincrement())
-  nome        String
-  descricao   String
-  bairro      String?
-  rua         String?
-  latitude    Float
-  longitude   Float
-  tipoRacismo TipoRacismo @relation(fields: [tipoRacismoId], references: [id])
-  tipoRacismoId Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  respostas   Resposta[]
-
-  @@index([tipoRacismoId])
-}
-
 model Resposta {
   id          Int      @id @default(autoincrement())
   comentario  String

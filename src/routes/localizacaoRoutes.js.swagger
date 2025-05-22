@@ -124,54 +124,6 @@ router.post('/', criarLocalizacao);
  *       404:
  *         description: Localização não encontrada
  */
-/**
- * @swagger
- * /localizacoes/tipo/{tipoRacismoId}:
- *   get:
- *     summary: Retorna localizações por tipo de racismo
- *     tags: [Localizações]
- *     parameters:
- *       - in: path
- *         name: tipoRacismoId
- *         schema:
- *           type: integer
- *         required: true
- *         description: ID do tipo de racismo
- *     responses:
- *       200:
- *         description: Lista de localizações filtradas
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Localizacao'
- */
-router.get('/tipo/:tipoRacismoId', buscarLocalizacoesPorTipo);
-
-/**
- * @swagger
- * /localizacoes/{id}:
- *   get:
- *     summary: Retorna uma localização pelo ID
- *     tags: [Localizações]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *         description: ID da localização
- *     responses:
- *       200:
- *         description: Detalhes da localização
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Localizacao'
- *       404:
- *         description: Localização não encontrada
- */
 router.get('/:id', buscarLocalizacaoPorId);
 
 /**
@@ -225,5 +177,30 @@ router.put('/:id', atualizarLocalizacao);
  *         description: Localização não encontrada
  */
 router.delete('/:id', deletarLocalizacao);
+
+/**
+ * @swagger
+ * /localizacoes/tipo/{tipoRacismoId}:
+ *   get:
+ *     summary: Retorna localizações por tipo de racismo
+ *     tags: [Localizações]
+ *     parameters:
+ *       - in: path
+ *         name: tipoRacismoId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID do tipo de racismo
+ *     responses:
+ *       200:
+ *         description: Lista de localizações filtradas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Localizacao'
+ */
+router.get('/tipo/:tipoRacismoId', buscarLocalizacoesPorTipo);
 
 export default router;
