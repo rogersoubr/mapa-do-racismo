@@ -13,7 +13,7 @@ import avaliacaoRoutes from './src/routes/avaliacao.routes.js';
 import respostaRoutes from './src/routes/resposta.routes.js';
 import denunciaRoutes from './src/routes/denuncias.routes.js';
 import ocorrenciasRoutes from './src/routes/ocorrencias.routes.js';
-import estatisticasRoutes from './src/routes/estatisticas.routes.js';
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -85,7 +85,7 @@ app.use('/api/avaliacoes', avaliacaoRoutes);
 app.use('/api/respostas', respostaRoutes);
 app.use('/api/denuncias', denunciaRoutes);
 app.use('/api/ocorrencias', ocorrenciasRoutes);
-app.use('/api/estatisticas', estatisticasRoutes);
+
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
