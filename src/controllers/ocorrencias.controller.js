@@ -1,15 +1,11 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // Criar uma nova ocorrência
 export const criarOcorrencia = async (req, res) => {
     try {
-        const { descricao, 
-                localizacaoId, 
-                tipoRacismoId, 
-                status 
-            } = req.body;
-        
+        const { descricao, localizacaoId, tipoRacismoId, status } = req.body;
+
         const ocorrencia = await prisma.ocorrencia.create({
             data: {
                 descricao,
@@ -63,19 +59,16 @@ export const buscarOcorrenciaPorId = async (req, res) => {
 export const atualizarOcorrencia = async (req, res) => {
     try {
         const { id } = req.params;
-        const { descricao, 
-                status, 
-                localizacaoId, 
-                tipoRacismoId 
-            } = req.body;
-            
+        const { descricao, status, localizacaoId, tipoRacismoId } = req.body;
+
         const ocorrencia = await prisma.ocorrencia.update({
             where: { id: Number(id) },
-            data: { descricao, 
-                    status, 
-                    localizacaoId, 
-                    tipoRacismoId 
-                  },
+            data: {
+                descricao,
+                status,
+                localizacaoId,
+                tipoRacismoId,
+            },
         });
         res.json(ocorrencia);
     } catch (error) {
