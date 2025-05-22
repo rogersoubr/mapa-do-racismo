@@ -1,37 +1,149 @@
-import { avaliacoes } from '../data/avaliacoes.js';
+import { PrismaClient } from '@prisma/client';
 
-export const listarAvaliacoes = (req, res) => {
-  res.json(avaliacoes);
+const prisma = new PrismaClient();
+
+export const listarAvaliacoes = async (req, res) => {
+  try {
+    const avaliacoes = await prisma.avaliacao.findMany({
+      include: {
+        tipoRacismo: true
+      }
+    });
+    res.json(avaliacoes);
+  } catch (error) {
+    console.error('Erro ao listar avaliações:', error);
+    res.status(500).json({ error: 'Erro ao buscar avaliações' });
+  }
 };
 
-export const criarAvaliacao = (req, res) => {
-  const { usuario, comentario, nota } = req.body;
-  const nova = {
-    id: Date.now().toString(),
-    usuario,
-    comentario,
-    nota
-  };
-  avaliacoes.push(nova);
-  res.status(201).json(nova);
+export const criarAvaliacao = async (req, res) => {
+  try {
+    const { usuario, comentario, nota, tipoRacismoId } = req.body;
+
+    // Validação
+    if (!usuario || !comentario || nota === undefined || !tipoRacismoId) {
+      return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+    }
+
+    if (isNaN(nota) || nota < 1 || nota > 5) {
+      return res.status(400).json({ error: 'A nota deve ser um número entre 1 e 5' });
+    }
+
+    // Verificar se o tipo de racismo existe
+    const tipoRacismo = await prisma.tipoRacismo.findUnique({
+      where: { id: parseInt(tipoRacismoId) }
+    });
+
+    if (!tipoRacismo) {
+      return res.status(404).json({ error: 'Tipo de racismo não encontrado' });
+    }
+
+    const novaAvaliacao = await prisma.avaliacao.create({
+      data: {
+        usuario,
+        comentario,
+        nota: Number(nota),
+        tipoRacismoId: parseInt(tipoRacismoId)
+      },
+      include: {
+        tipoRacismo: true
+      }
+    });
+
+    res.status(201).json(novaAvaliacao);
+  } catch (error) {
+    console.error('Erro ao criar avaliação:', error);
+    res.status(500).json({ error: 'Erro ao criar avaliação', details: error.message });
+  }
 };
 
-export const atualizarAvaliacao = (req, res) => {
-  const { id } = req.params;
-  const { usuario, comentario, nota } = req.body;
+export const buscarAvaliacaoPorId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const avaliacao = await prisma.avaliacao.findUnique({
+      where: { id: parseInt(id) },
+      include: {
+        tipoRacismo: true
+      }
+    });
 
-  const index = avaliacoes.findIndex(a => a.id === id);
-  if (index === -1) return res.status(404).json({ mensagem: 'Avaliação não encontrada' });
+    if (!avaliacao) {
+      return res.status(404).json({ error: 'Avaliação não encontrada' });
+    }
 
-  avaliacoes[index] = { id, usuario, comentario, nota };
-  res.json(avaliacoes[index]);
+    res.json(avaliacao);
+  } catch (error) {
+    console.error('Erro ao buscar avaliação:', error);
+    res.status(500).json({ error: 'Erro ao buscar avaliação' });
+  }
 };
 
-export const deletarAvaliacao = (req, res) => {
-  const { id } = req.params;
-  const index = avaliacoes.findIndex(a => a.id === id);
-  if (index === -1) return res.status(404).json({ mensagem: 'Avaliação não encontrada' });
+export const atualizarAvaliacao = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { usuario, comentario, nota, tipoRacismoId } = req.body;
 
-  const removida = avaliacoes.splice(index, 1);
-  res.json(removida[0]);
+    // Verificar se a avaliação existe
+    const avaliacaoExistente = await prisma.avaliacao.findUnique({
+      where: { id: parseInt(id) }
+    });
+
+    if (!avaliacaoExistente) {
+      return res.status(404).json({ error: 'Avaliação não encontrada' });
+    }
+
+    // Verificar se o tipo de racismo existe
+    if (tipoRacismoId) {
+      const tipoRacismo = await prisma.tipoRacismo.findUnique({
+        where: { id: parseInt(tipoRacismoId) }
+      });
+
+      if (!tipoRacismo) {
+        return res.status(404).json({ error: 'Tipo de racismo não encontrado' });
+      }
+    }
+
+    const dadosAtualizacao = {};
+    if (usuario) dadosAtualizacao.usuario = usuario;
+    if (comentario) dadosAtualizacao.comentario = comentario;
+    if (nota !== undefined) dadosAtualizacao.nota = Number(nota);
+    if (tipoRacismoId) dadosAtualizacao.tipoRacismoId = parseInt(tipoRacismoId);
+
+    const avaliacaoAtualizada = await prisma.avaliacao.update({
+      where: { id: parseInt(id) },
+      data: dadosAtualizacao,
+      include: {
+        tipoRacismo: true
+      }
+    });
+
+    res.json(avaliacaoAtualizada);
+  } catch (error) {
+    console.error('Erro ao atualizar avaliação:', error);
+    res.status(500).json({ error: 'Erro ao atualizar avaliação', details: error.message });
+  }
+};
+
+export const deletarAvaliacao = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Verificar se a avaliação existe
+    const avaliacao = await prisma.avaliacao.findUnique({
+      where: { id: parseInt(id) }
+    });
+
+    if (!avaliacao) {
+      return res.status(404).json({ error: 'Avaliação não encontrada' });
+    }
+
+    await prisma.avaliacao.delete({
+      where: { id: parseInt(id) }
+    });
+
+    res.status(204).send();
+  } catch (error) {
+    console.error('Erro ao deletar avaliação:', error);
+    res.status(500).json({ error: 'Erro ao deletar avaliação', details: error.message });
+  }
 };

@@ -69,9 +69,15 @@ app.use(express.json());
 
 // Importa as rotas
 import tipoRacismoRoutes from './src/routes/tipoRacismoRoutes.js';
+import localizacoesRoutes from './src/routes/localizacaoRoutes.js';
+import avaliacaoRoutes from './src/routes/avaliacaoRoutes.js';
+import respostaRoutes from './src/routes/respostaRoutes.js';
 
 // Rotas
-app.use('/api', tipoRacismoRoutes);  // Tipo de rota a definir  Realiza exportaçao das rotas 
+app.use('/api/tipos-racismo', tipoRacismoRoutes);
+app.use('/api/localizacoes', localizacoesRoutes);
+app.use('/api/avaliacoes', avaliacaoRoutes);
+app.use('/api/respostas', respostaRoutes);
 
 app.listen(PORT, () => {
     console.log(`✅ Servidor rodando na porta ${PORT}`);
