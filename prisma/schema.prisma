@@ -87,9 +87,10 @@ model Avaliacao {
   @@index([ocorrenciaId])
 }
 
-model Denuncia {
+model Estatistica {
   id          Int      @id @default(autoincrement())
-  descricao   String
-  localizacao String
-  data        DateTime @default(now())
+  data        DateTime
+  total       Int
+  tipo        String   
+  createdAt   DateTime @default(now())
 }
