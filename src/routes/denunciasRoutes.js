@@ -1,5 +1,5 @@
 import express from 'express';
-import { createDenuncia, getDenuncias, getDenunciaById, updateDenuncia, deleteDenuncia } from '../controllers/denuncia.controller.js';
+import { createDenuncia, getDenuncias, getDenunciaById, updateDenuncia, deleteDenuncia } from '../controllers/denunciasController.js';
 
 const router = express.Router();
 
