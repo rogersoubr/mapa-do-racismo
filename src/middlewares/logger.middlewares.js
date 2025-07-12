@@ -1,30 +1,18 @@
 import { v4 as uuid4 } from "uuid";
 import { fileURLToPath } from "url";
 import express from "express";
-import cors from "cors";
 import { format } from "date-fns";
 import path from "path";
 import fs from "fs";
 import fsPromises from "fs/promises";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // Configuração do Express
 const app = express();
 
-// Configuração do CORS
-const corsOptions = {
-  origin: [
-    "http://localhost:3000",
-    "http://127.0.0.1:8000"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-};
-
-app.use(cors(corsOptions));
 app.use(express.json());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Função de log (mantida igual)
 const logEvents = async (message, logFileName) => {

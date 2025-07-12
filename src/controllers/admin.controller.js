@@ -3,9 +3,10 @@ import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
+
 // Função para criar hash da senha
 const hashPassword = async (password) => {
-  const saltRounds = 10;
+  const saltRounds = 10;//espaçamento da senha de 10 cripto
   return await bcrypt.hash(password, saltRounds);
 };
 

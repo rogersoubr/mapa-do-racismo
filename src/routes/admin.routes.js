@@ -6,7 +6,7 @@ import adminController from '../controllers/admin.controller.js';
 const router = express.Router();  // Criando um novo roteador do Express
 
 // Definindo a rota POST para criar um novo Admin, que chama a função 'create' do controlador
-router.post("/", adminController.create);
+router.post("/criar", adminController.create);
 
 // Definindo a rota GET para obter todos os Admins, que chama a função 'findAll' do controlador
 router.get("/", adminController.findAll);

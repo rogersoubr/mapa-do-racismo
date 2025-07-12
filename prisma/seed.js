@@ -13,7 +13,6 @@ async function main() {
   await prisma.avaliacao.deleteMany({});
   await prisma.localizacao.deleteMany({});
   await prisma.tipoRacismo.deleteMany({});
-  await prisma.denuncia.deleteMany({});
   await prisma.ocorrencias.deleteMany({});
 
   // Criar tipos de racismo

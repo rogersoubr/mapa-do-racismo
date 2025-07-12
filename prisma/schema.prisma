@@ -9,88 +9,81 @@ datasource db {
 }
 
 
-model Localizacao {
-  id          Int      @id @default(autoincrement())
-  nome        String
-  descricao   String
-  bairro      String?
-  rua         String?
-  latitude    Float
-  longitude   Float
-  tipoRacismo TipoRacismo @relation(fields: [tipoRacismoId], references: [id])
-  tipoRacismoId Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  respostas   Resposta[]
-  ocorrencias  Ocorrencia[]
+model localizacao {
+  id            String              @id @default(cuid())
+  nome          String
+  descricao     String
+  bairro        String?
+  rua           String?
+  latitude      Float
+  longitude     Float
+  tipoRacismo   tipoRacismo         @relation(fields: [tipoRacismoId], references: [id])
+  tipoRacismoId String
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  respostas     resposta[]
+  ocorrencias   ocorrencias[]
 
   @@index([tipoRacismoId])
 }
 
 
-model TipoRacismo {
-  id          Int      @id @default(autoincrement())
-  descricao   String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  localizacoes Localizacao[]
-  ocorrencias  Ocorrencia[]
-  avaliacoes   Avaliacao[]
+model tipoRacismo {
+  id            String              @id @default(cuid())
+  descricao     String
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  localizacoes  localizacao[]
+  ocorrencias   ocorrencias[]
+  avaliacoes    avaliacao[]
 }
 
-model Ocorrencia {
-  id             Int           @id @default(autoincrement())
+model ocorrencias {
+  id             String           @id @default(cuid())
   descricao      String
-  data           DateTime      @default(now())
-  status         String        @default("aberta")
-  localizacaoId  Int
-  localizacao    Localizacao   @relation(fields: [localizacaoId], references: [id])
-  tipoRacismoId  Int
-  tipoRacismo    TipoRacismo   @relation(fields: [tipoRacismoId], references: [id])
-  respostas      Resposta[]
-  avaliacoes     Avaliacao[]
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  data           DateTime         @default(now())
+  status         String           @default("aberta")
+  localizacaoId  String
+  localizacao    localizacao      @relation(fields: [localizacaoId], references: [id])
+  tipoRacismoId  String
+  tipoRacismo    tipoRacismo      @relation(fields: [tipoRacismoId], references: [id])
+  respostas      resposta[]
+  avaliacoes     avaliacao[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 
   @@index([localizacaoId])
   @@index([tipoRacismoId])
 }
 
-model Resposta {
-  id          Int      @id @default(autoincrement())
-  comentario  String
-  usuario     String
-  localizacao  Localizacao @relation(fields: [localizacaoId], references: [id])
-  localizacaoId Int
-  ocorrencia    Ocorrencia  @relation(fields: [ocorrenciaId], references: [id])
-  ocorrenciaId  Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model resposta {
+  id            String              @id @default(cuid())
+  comentario    String
+  usuario       String
+  localizacao   localizacao         @relation(fields: [localizacaoId], references: [id])
+  localizacaoId String
+  ocorrencia    ocorrencias         @relation(fields: [ocorrenciaId], references: [id])
+  ocorrenciaId  String
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
 
   @@index([localizacaoId])
   @@index([ocorrenciaId])
 }
 
-model Avaliacao {
-  id          Int      @id @default(autoincrement())
-  usuario     String
-  comentario  String
-  nota        Int      @default(0)
-  tipoRacismo TipoRacismo @relation(fields: [tipoRacismoId], references: [id])
-  tipoRacismoId Int
-  ocorrencia    Ocorrencia  @relation(fields: [ocorrenciaId], references: [id])
-  ocorrenciaId  Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model avaliacao {
+  id            String              @id @default(cuid())
+  usuario       String
+  comentario    String
+  nota          Int                 @default(0)
+  tipoRacismo   tipoRacismo         @relation(fields: [tipoRacismoId], references: [id])
+  tipoRacismoId String
+  ocorrencia    ocorrencias         @relation(fields: [ocorrenciaId], references: [id])
+  ocorrenciaId  String
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
 
   @@index([tipoRacismoId])
   @@index([ocorrenciaId])
 }
 
-model Estatistica {
-  id          Int      @id @default(autoincrement())
-  data        DateTime
-  total       Int
-  tipo        String   
-  createdAt   DateTime @default(now())
-}

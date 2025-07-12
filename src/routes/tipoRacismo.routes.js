@@ -73,7 +73,7 @@ router.get('/:id', tipoRacismoController.show);
 
 /**
  * @swagger
- * /tipos-racismo:
+ * /tipos-racismo/criar:
  *   post:
  *     summary: Cria um novo tipo de racismo
  *     tags: [Tipos de Racismo]
@@ -98,11 +98,11 @@ router.get('/:id', tipoRacismoController.show);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/', tipoRacismoController.store);
+router.post('/criar', tipoRacismoController.store);
 
 /**
  * @swagger
- * /tipos-racismo/{id}:
+ * /tipos-racismo/atualizar/{id}:
  *   put:
  *     summary: Atualiza um tipo de racismo
  *     tags: [Tipos de Racismo]
@@ -132,11 +132,11 @@ router.post('/', tipoRacismoController.store);
  *       404:
  *         description: Tipo de racismo não encontrado
  */
-router.put('/:id', tipoRacismoController.update);
+router.put('/atualizar/:id', tipoRacismoController.update);
 
 /**
  * @swagger
- * /tipos-racismo/{id}:
+ * /tipos-racismo/deletar/{id}:
  *   delete:
  *     summary: Remove um tipo de racismo
  *     tags: [Tipos de Racismo]
@@ -153,6 +153,6 @@ router.put('/:id', tipoRacismoController.update);
  *       404:
  *         description: Tipo de racismo não encontrado
  */
-router.delete('/:id', tipoRacismoController.delete);
+router.delete('/deletar/:id', tipoRacismoController.delete);
 
 export default router;

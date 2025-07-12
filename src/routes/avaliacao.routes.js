@@ -1,11 +1,5 @@
 import express from 'express';
-import {
-  listarAvaliacoes,
-  criarAvaliacao,
-  buscarAvaliacaoPorId,
-  atualizarAvaliacao,
-  deletarAvaliacao
-} from '../controllers/avaliacoes.controller.js';
+import avaliacaoController from '../controllers/avaliacao.controller.js';
 
 const router = express.Router();
 
@@ -44,7 +38,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /avaliacoes:
+ * /avaliacoes/:
  *   get:
  *     summary: Retorna todas as avaliações
  *     tags: [Avaliações]
@@ -58,11 +52,11 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Avaliacao'
  */
-router.get('/', listarAvaliacoes);
+router.get('/', avaliacaoController.listarAvaliacoes);
 
 /**
  * @swagger
- * /avaliacoes:
+ * /avaliacoes/criar:
  *   post:
  *     summary: Cria uma nova avaliação
  *     tags: [Avaliações]
@@ -95,7 +89,7 @@ router.get('/', listarAvaliacoes);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/', criarAvaliacao);
+router.post('/criar', avaliacaoController.criarAvaliacao);
 
 /**
  * @swagger
@@ -120,11 +114,11 @@ router.post('/', criarAvaliacao);
  *       404:
  *         description: Avaliação não encontrada
  */
-router.get('/:id', buscarAvaliacaoPorId);
+router.get('/:id', avaliacaoController.buscarAvaliacaoPorId);
 
 /**
  * @swagger
- * /avaliacoes/{id}:
+ * /avaliacoes/atualizar/{id}:
  *   put:
  *     summary: Atualiza uma avaliação
  *     tags: [Avaliações]
@@ -158,11 +152,11 @@ router.get('/:id', buscarAvaliacaoPorId);
  *       404:
  *         description: Avaliação não encontrada
  */
-router.put('/:id', atualizarAvaliacao);
+router.put('/atualizar/:id', avaliacaoController.atualizarAvaliacao);
 
 /**
  * @swagger
- * /avaliacoes/{id}:
+ * /avaliacoes/deletar{id}:
  *   delete:
  *     summary: Remove uma avaliação
  *     tags: [Avaliações]
@@ -179,6 +173,6 @@ router.put('/:id', atualizarAvaliacao);
  *       404:
  *         description: Avaliação não encontrada
  */
-router.delete('/:id', deletarAvaliacao);
+router.delete('deletar/:id', avaliacaoController.deletarAvaliacao);
 
 export default router;

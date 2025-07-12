@@ -1,12 +1,5 @@
 import express from 'express';
-import {
-  listarLocalizacoes,
-  criarLocalizacao,
-  buscarLocalizacaoPorId,
-  atualizarLocalizacao,
-  deletarLocalizacao,
-  buscarLocalizacoesPorTipo
-} from '../controllers/localizacao.controller.js';
+import localizacaoController from '../controllers/localizacao.controller.js';
 
 const router = express.Router();
 
@@ -75,11 +68,11 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Localizacao'
  */
-router.get('/', listarLocalizacoes);
+router.get('/', localizacaoController.listarLocalizacoes);
 
 /**
  * @swagger
- * /localizacoes:
+ * /localizacoes/criar:
  *   post:
  *     summary: Cria uma nova localização
  *     tags: [Localizações]
@@ -99,7 +92,7 @@ router.get('/', listarLocalizacoes);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/', criarLocalizacao);
+router.post('/criar', localizacaoController.criarLocalizacao);
 
 /**
  * @swagger
@@ -147,7 +140,7 @@ router.post('/', criarLocalizacao);
  *               items:
  *                 $ref: '#/components/schemas/Localizacao'
  */
-router.get('/tipo/:tipoRacismoId', buscarLocalizacoesPorTipo);
+router.get('/tipo/:tipoRacismoId', localizacaoController.buscarLocalizacaoPorId);
 
 /**
  * @swagger
@@ -172,11 +165,11 @@ router.get('/tipo/:tipoRacismoId', buscarLocalizacoesPorTipo);
  *       404:
  *         description: Localização não encontrada
  */
-router.get('/:id', buscarLocalizacaoPorId);
+router.get('/:id', localizacaoController.buscarLocalizacaoPorId);
 
 /**
  * @swagger
- * /localizacoes/{id}:
+ * /localizacoes/atualizar/{id}:
  *   put:
  *     summary: Atualiza uma localização
  *     tags: [Localizações]
@@ -203,11 +196,11 @@ router.get('/:id', buscarLocalizacaoPorId);
  *       404:
  *         description: Localização não encontrada
  */
-router.put('/:id', atualizarLocalizacao);
+router.put('/atualizar/:id', localizacaoController.atualizarLocalizacao);
 
 /**
  * @swagger
- * /localizacoes/{id}:
+ * /localizacoes/deletar/{id}:
  *   delete:
  *     summary: Remove uma localização
  *     tags: [Localizações]
@@ -224,6 +217,6 @@ router.put('/:id', atualizarLocalizacao);
  *       404:
  *         description: Localização não encontrada
  */
-router.delete('/:id', deletarLocalizacao);
+router.delete('/deletar/:id', localizacaoController.deletarLocalizacao);
 
 export default router;

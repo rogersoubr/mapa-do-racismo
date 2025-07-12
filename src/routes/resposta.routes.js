@@ -1,13 +1,6 @@
 import express from 'express';
 
-import {
-  listarRespostas,
-  criarResposta,
-  atualizarResposta,
-  deletarResposta,
-  buscarRespostaPorId,
-  listarRespostasPorLocalizacao
-} from '../controllers/resposta.controller.js';
+import respostaController from '../controllers/resposta.controller.js';
 
 const router = express.Router();
 
@@ -56,11 +49,11 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Resposta'
  */
-router.get('/', listarRespostas);
+router.get('/', respostaController.listarRespostas);
 
 /**
  * @swagger
- * /respostas:
+ * /respostas/criar:
  *   post:
  *     summary: Cria uma nova resposta
  *     tags: [Respostas]
@@ -88,7 +81,7 @@ router.get('/', listarRespostas);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/', criarResposta);
+router.post('/criar', respostaController.criarResposta);
 
 /**
  * @swagger
@@ -115,7 +108,7 @@ router.post('/', criarResposta);
  *       404:
  *         description: Localização não encontrada
  */
-router.get('/localizacao/:localizacaoId', listarRespostasPorLocalizacao);
+router.get('/localizacao/:localizacaoId', respostaController.listarRespostasPorLocalizacao);
 
 /**
  * @swagger
@@ -140,11 +133,11 @@ router.get('/localizacao/:localizacaoId', listarRespostasPorLocalizacao);
  *       404:
  *         description: Resposta não encontrada
  */
-router.get('/:id', buscarRespostaPorId);
+router.get('/:id', respostaController.buscarRespostaPorId);
 
 /**
  * @swagger
- * /respostas/{id}:
+ * /respostas/atualizar/{id}:
  *   put:
  *     summary: Atualiza uma resposta
  *     tags: [Respostas]
@@ -174,11 +167,11 @@ router.get('/:id', buscarRespostaPorId);
  *       404:
  *         description: Resposta não encontrada
  */
-router.put('/:id', atualizarResposta);
+router.put('/atualizar/:id', respostaController.atualizarResposta);
 
 /**
  * @swagger
- * /respostas/{id}:
+ * /respostas/deletar/{id}:
  *   delete:
  *     summary: Remove uma resposta
  *     tags: [Respostas]
@@ -195,6 +188,6 @@ router.put('/:id', atualizarResposta);
  *       404:
  *         description: Resposta não encontrada
  */
-router.delete('/:id', deletarResposta);
+router.delete('/deletar/:id', respostaController.deletarResposta);
 
 export default router;

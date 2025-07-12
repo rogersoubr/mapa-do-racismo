@@ -6,22 +6,35 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import swaggerDocs from './src/config/swagger.js';
 
+// Carrega as variáveis de ambiente
+dotenv.config({ path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env' });
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+app.use(cors({
+  origin: "*", // Permite todas origens (TIRAR)
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
+
+
+app.use(express.json());
+app.use(logger);
+
 // Importa as rotas
 import tipoRacismoRoutes from './src/routes/tipoRacismo.routes.js';
 import localizacoesRoutes from './src/routes/localizacao.routes.js';
 import avaliacaoRoutes from './src/routes/avaliacao.routes.js';
 import respostaRoutes from './src/routes/resposta.routes.js';
-import denunciaRoutes from './src/routes/denuncias.routes.js';
 import ocorrenciasRoutes from './src/routes/ocorrencias.routes.js';
+import admimRoutes from './src/routes/admin.routes.js';
+import { logger } from './src/middlewares/logger.middlewares.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Carrega as variáveis de ambiente
-dotenv.config({ path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env' });
-
-const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Verificação de ambiente
 console.log('\n🔍 Verificando configurações do ambiente...\n');
@@ -73,8 +86,6 @@ try {
 
 console.log('\n🚀 Iniciando servidor...\n');
 
-app.use(cors());
-app.use(express.json());
 
 // Adicionei aqui a rota raiz para evitar "Cannot GET /"
 app.get('/', (req, res) => {
@@ -82,12 +93,12 @@ app.get('/', (req, res) => {
 });
 
 // Rotas
-app.use('/api/tipos-racismo', tipoRacismoRoutes);
-app.use('/api/localizacoes', localizacoesRoutes);
-app.use('/api/avaliacoes', avaliacaoRoutes);
-app.use('/api/respostas', respostaRoutes);
-app.use('/api/denuncias', denunciaRoutes);
-app.use('/api/ocorrencias', ocorrenciasRoutes);
+app.use('/tipos-racismo', tipoRacismoRoutes);
+app.use('/localizacoes', localizacoesRoutes);
+app.use('/avaliacao', avaliacaoRoutes);
+app.use('/respostas', respostaRoutes);
+app.use('/ocorrencias', ocorrenciasRoutes);
+app.use('/admin', admimRoutes);//laugh/login
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
