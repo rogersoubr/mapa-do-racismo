@@ -13,8 +13,8 @@
     "seed:test": "cross-env NODE_ENV=test node -r dotenv/config prisma/seed.js",
     "docs:build": "python -m mkdocs build",
     "docs:serve": "python -m mkdocs serve",
-    "prisma:generate":"npx prisma generate dev",
-    "prisma:migrate":"npx prisma migrate dev"
+    "prisma:generate": "npx prisma generate dev",
+    "prisma:migrate": "npx prisma migrate dev"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,8 @@
   "dependencies": {
     "@prisma/client": "^6.8.2",
     "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",

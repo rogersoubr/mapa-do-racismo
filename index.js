@@ -98,7 +98,7 @@ app.use('/localizacoes', localizacoesRoutes);
 app.use('/avaliacao', avaliacaoRoutes);
 app.use('/respostas', respostaRoutes);
 app.use('/ocorrencias', ocorrenciasRoutes);
-app.use('/admin', admimRoutes);//laugh/login
+app.use('/admin', admimRoutes);//trocar para /laugh que vai para login
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {

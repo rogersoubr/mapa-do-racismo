@@ -15,7 +15,7 @@ const router = express.Router();
  *         - localizacaoId
  *       properties:
  *         id:
- *           type: integer
+ *           type: string
  *           description: ID único da resposta
  *         texto:
  *           type: string

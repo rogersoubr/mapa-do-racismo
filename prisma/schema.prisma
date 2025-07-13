@@ -8,6 +8,21 @@ datasource db {
   url      = env("DB_STORAGE")
 }
 
+enum papelUsuario {
+  USER
+  ADMIN
+}
+
+model usuario {
+  id            String            @id @default(cuid())
+  email         String            @unique
+  senha         String            
+  papel         papelUsuario      @default(USER)
+  cretedAt      DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@map("usuarios")
+}
 
 model localizacao {
   id            String              @id @default(cuid())

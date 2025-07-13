@@ -142,7 +142,7 @@ router.put('/atualizar/:id', ocorrenciasController.atualizarOcorrencias);
  *       '204':
  *         description: Ocorrência removida com sucesso
  */
-router.delete('/remover/:id', ocorrenciasController.removerOcorrencias);
+router.delete('/deletar/:id', ocorrenciasController.removerOcorrencias);
 
 /**
  * @swagger
