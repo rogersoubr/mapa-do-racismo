@@ -10,19 +10,19 @@ export const authenticateToken = async (req, res, next) =>{
             return res.status(400).json({ error: "Token não fornecido"});
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);//verifica se o token é ok comporado com o jwt_secret
+        //pegando usuario no prisma em comparação com o token
         const usuario = await prisma.usuario.findUnique({
             where:{id: decoded.usuarioID},
             select: {id:true, email: true, regras: true},
         });
-
+        //se não tiverusuario
         if(!usuario){
             res.status(401).json({ error: "Usuário não encontrado" });
             return;
         }
 
-        req.usuario = usuario;
+        req.usuario = usuario;//coloca usuario achado na requisicao
         next();
     }catch(error){
         return res.status(401).json({ error: "Token inválido" });

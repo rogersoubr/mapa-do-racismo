@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
 import cookieParser from 'cookie-parser';
 import { fileURLToPath } from 'url';
-//import { dirname, join } from 'path';
+import { dirname, join } from 'path';
 import swaggerDocs from './src/config/swagger.js';
 
 // Carrega as variáveis de ambiente
@@ -33,12 +33,11 @@ import avaliacaoRoutes from './src/routes/avaliacao.routes.js';
 import respostaRoutes from './src/routes/resposta.routes.js';
 import ocorrenciasRoutes from './src/routes/ocorrencias.routes.js';
 import authRoutes from './src/routes/auth.routes.js'
-import usuarioRoutes from './src/routes/usuario.routes.js';
+import adminRoutes from './src/routes/admin.routes.js';
 import { logger } from './src/middlewares/logger.middlewares.js';
-import { timeStamp } from 'console';
 
 const __filename = fileURLToPath(import.meta.url);
-/*const __dirname = dirname(__filename);*/
+const __dirname = dirname(__filename);
 
 
 // Verificação de ambiente
@@ -60,12 +59,12 @@ if (missingVars.length > 0) {
 
 // Exibe configurações atuais
 console.log('✅ Configurações do ambiente:');
-console.log(`   • NODE_ENV: ${process.env.NODE_ENV || 'development (padrão)'}`);
+console.log(`   • NODE_ENV (modo): ${process.env.NODE_ENV || 'development (padrão)'}`);
 console.log(`   • Porta: ${PORT}`);
 console.log(`   • JWT_SECRET: ${process.env.JWT_SECRET ? '*** (definida)' : '❌ Não definida'}`);
-console.log(`   • DB_STORAGE: ${process.env.DB_STORAGE || '❌ Não definido'}`);
+console.log(`   • DB_STORAGE (banco de dados: ${process.env.DB_STORAGE || '❌ Não definido'}`);
 
-/* Tenta ler a configuração do banco de forma síncrona
+ //REGEX que tenta ler a configuração do banco de forma síncrona
 try {
   const configPath = join(__dirname, 'src', 'config', 'config.js');
   const configContent = readFileSync(configPath, 'utf8');
@@ -88,14 +87,14 @@ try {
 } catch (error) {
   console.warn('ℹ️  Não foi possível verificar a configuração do banco:', error.message);
 }
-  */
+  
 
 console.log('\n🚀 Iniciando servidor...\n');
 
-/* Adicionei aqui a rota raiz para evitar "Cannot GET /"
+// Adicionei aqui a rota raiz para evitar "Cannot GET /"
 app.get('/', (req, res) => {
   res.send('API Mapa do Racismo rodando!');
-});*/
+});
 
 // Rotas
 app.use('/tipos-racismo', tipoRacismoRoutes);
@@ -104,7 +103,7 @@ app.use('/avaliacao', avaliacaoRoutes);
 app.use('/respostas', respostaRoutes);
 app.use('/ocorrencias', ocorrenciasRoutes);
 app.use('/auth',authRoutes);
-app.use('/usuario', usuarioRoutes);
+app.use('/admin', adminRoutes);
 console.log('DEBUG: CHEGOU 1');
 
 // Adicionei aqui a rota raiz para evitar "Cannot GET /"

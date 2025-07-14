@@ -24,14 +24,14 @@ export const AuthController = {
             //criando hash-cripto na senha com espaço de 10
             const hashSenha = await bcrypt.hash(senha, 10);
             //cria usuario com as tais definições (senha vai pro bd criptografada)
-            const usuario = await prisma.user.create({
+            const usuario = await prisma.usuario.create({
                 data: {
                     email, 
                     senha: hashSenha,
                     regra: regra || "USER",
                 },
             });
-            //gera o token que vai mandar para o front
+            //gera o JWTtoken que vai mandar para o front
             const token = jwt.sign(
                 {
                     usuarioID: usuario.id,
@@ -48,9 +48,9 @@ export const AuthController = {
                 sameSite: "strict",
                 maxAge: 24 * 60 * 60 * 100,
             });
-
+            //retorna o token
             const resposta= {
-                user:{
+                usuario:{
                     id: usuario.id,
                     email: usuario.email,
                     regra: usuario.regra,                
@@ -109,7 +109,7 @@ export const AuthController = {
             });
 
             const resposta ={
-                user:{
+                usuario:{
                     id: usuario.id,
                     email: usuario.email,
                     regra: usuario.regra,                

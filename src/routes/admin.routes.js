@@ -1,20 +1,20 @@
 import express from 'express';
-import  UsuarioController from '../controllers/usuario.controller.js';
+import  AdminController from '../controllers/admin.controller.js';
 import  { authenticateToken, requireAdmin } from '../middlewares/authenticate.middlewares.js';
 
-const usuarioRoutes = express.Router();
+const adminRoutes = express.Router();
 
 
 
 // Middleware de autenticação para todas as rotas
-usuarioRoutes.use(authenticateToken);//se ta logado
-usuarioRoutes.use(requireAdmin);//se e admim
+adminRoutes.use(authenticateToken);//se ta logado
+adminRoutes.use(requireAdmin);//se e admim
 
 /**
  * @swagger
  * components:
  *   schemas:
- *     Usuario:
+ *     Admin:
  *       type: object
  *       required:
  *         - email
@@ -44,10 +44,10 @@ usuarioRoutes.use(requireAdmin);//se e admim
 
 /**
  * @swagger
- * /usuario/usuarios:
+ * /admin/usuarios:
  *   get:
  *     summary: Retorna todos os usuários
- *     tags: [Usuario]
+ *     tags: [Admin]
  *     responses:
  *       200:
  *         description: Lista todos os usuários
@@ -61,14 +61,14 @@ usuarioRoutes.use(requireAdmin);//se e admim
 
 // Rotas de usuário
 //tem que criar o swagger aqui meus amores
-usuarioRoutes.get('/usuarios', UsuarioController.listarUsuarios); // Obter perfil do usuário logado
+adminRoutes.get('/usuarios', AdminController.listarUsuarios); // Obter perfil do usuário logado
 
 /**
  * @swagger
- * /usuario/status:
+ * /admin/status:
  *   get:
  *     summary: Retorna as estatísticas de usuários
- *     tags: [Usuario]
+ *     tags: [Admin]
  *     responses:
  *       200:
  *         description: Lista estatísticas dos usuários
@@ -80,14 +80,14 @@ usuarioRoutes.get('/usuarios', UsuarioController.listarUsuarios); // Obter perfi
  *                 $ref: '#/components/schemas/TipoRacismo'
  */
 
-usuarioRoutes.get('/status', UsuarioController.statusRegra); // rota para ler as estatísticas dos usuários
+adminRoutes.get('/status', AdminController.statusRegra); // rota para ler as estatísticas dos usuários
 
 /**
  * @swagger
- * /usuario/deletar/{id}:
+ * /admin/deletar/{id}:
  *   delete:
  *     summary: Remove um outro usuário
- *     tags: [Usuario]
+ *     tags: [Admin]
  *     parameters:
  *       - in: path
  *         name: id
@@ -103,6 +103,6 @@ usuarioRoutes.get('/status', UsuarioController.statusRegra); // rota para ler as
  *       500:
  *         description: Erro interno do servidor
  */
-usuarioRoutes.delete('/deletar/:id', UsuarioController.deletarUsuario); // Deletar por id
+adminRoutes.delete('/deletar/:id', AdminController.deletarUsuario); // Deletar por id
 
-export default usuarioRoutes;
+export default adminRoutes;

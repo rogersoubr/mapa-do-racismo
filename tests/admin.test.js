@@ -9,7 +9,7 @@ describe('CRUD de Admins', () => {
   it('deve criar um novo admin', async () => {
     // Enviando uma requisição POST para a rota '/admins' com os dados do admin
     const res = await request(app)
-      .post('/admins')
+      .post('/admin')
       .send({ nome: 'Admin Teste', email: 'admin@teste.com', senha: '123456' });
     
     // Verificando se a resposta tem status 201 (Criado)

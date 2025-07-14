@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-export const UsuarioController = {
+export const AdminController = {
   async listarUsuarios(req, res) {
     try {
       const usuario = await prisma.usuario.findMany({
@@ -60,4 +60,4 @@ export const UsuarioController = {
   },
 };
 
-export default UsuarioController;
+export default AdminController;
