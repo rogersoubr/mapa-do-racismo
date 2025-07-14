@@ -2,7 +2,7 @@ import ocorrenciasController from '../controllers/ocorrencias.controller.js';
 
 import express from 'express';
 
-const router = express.Router();
+const ocorrenciasRoutes = express.Router();
 
 /**
  * @swagger
@@ -66,7 +66,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Ocorrencia'
  */
-router.post('/criar', ocorrenciasController.criarOcorrencias);
+ocorrenciasRoutes.post('/criar', ocorrenciasController.criarOcorrencias);
 
 /**
  * @swagger
@@ -85,7 +85,7 @@ router.post('/criar', ocorrenciasController.criarOcorrencias);
  *               items:
  *                 $ref: '#/components/schemas/Ocorrencia'
  */
-router.get('/', ocorrenciasController.listarOcorrencias);
+ocorrenciasRoutes.get('/', ocorrenciasController.listarOcorrencias);
 
 /**
  * @swagger
@@ -123,7 +123,7 @@ router.get('/', ocorrenciasController.listarOcorrencias);
  *             schema:
  *               $ref: '#/components/schemas/Ocorrencia'
  */
-router.put('/atualizar/:id', ocorrenciasController.atualizarOcorrencias);
+ocorrenciasRoutes.put('/atualizar/:id', ocorrenciasController.atualizarOcorrencias);
 
 /**
  * @swagger
@@ -142,7 +142,7 @@ router.put('/atualizar/:id', ocorrenciasController.atualizarOcorrencias);
  *       '204':
  *         description: Ocorrência removida com sucesso
  */
-router.delete('/deletar/:id', ocorrenciasController.removerOcorrencias);
+ocorrenciasRoutes.delete('/deletar/:id', ocorrenciasController.removerOcorrencias);
 
 /**
  * @swagger
@@ -167,6 +167,6 @@ router.delete('/deletar/:id', ocorrenciasController.removerOcorrencias);
  *       '404':
  *         description: Ocorrência não encontrada
  */
-router.get('/:id', ocorrenciasController.buscarOcorrenciasPorId);
+ocorrenciasRoutes.get('/:id', ocorrenciasController.buscarOcorrenciasPorId);
 
-export default router;
+export default ocorrenciasRoutes;

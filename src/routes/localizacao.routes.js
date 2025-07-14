@@ -1,7 +1,7 @@
 import express from 'express';
 import localizacaoController from '../controllers/localizacao.controller.js';
 
-const router = express.Router();
+const localizacoesRoutes = express.Router();
 
 /**
  * @swagger
@@ -68,7 +68,7 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Localizacao'
  */
-router.get('/', localizacaoController.listarLocalizacoes);
+localizacoesRoutes.get('/', localizacaoController.listarLocalizacoes);
 
 /**
  * @swagger
@@ -92,7 +92,7 @@ router.get('/', localizacaoController.listarLocalizacoes);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/criar', localizacaoController.criarLocalizacao);
+localizacoesRoutes.post('/criar', localizacaoController.criarLocalizacao);
 
 /**
  * @swagger
@@ -140,7 +140,7 @@ router.post('/criar', localizacaoController.criarLocalizacao);
  *               items:
  *                 $ref: '#/components/schemas/Localizacao'
  */
-router.get('/tipo/:tipoRacismoId', localizacaoController.buscarLocalizacaoPorId);
+localizacoesRoutes.get('/tipo/:tipoRacismoId', localizacaoController.buscarLocalizacaoPorId);
 
 /**
  * @swagger
@@ -165,7 +165,7 @@ router.get('/tipo/:tipoRacismoId', localizacaoController.buscarLocalizacaoPorId)
  *       404:
  *         description: Localização não encontrada
  */
-router.get('/:id', localizacaoController.buscarLocalizacaoPorId);
+localizacoesRoutes.get('/:id', localizacaoController.buscarLocalizacaoPorId);
 
 /**
  * @swagger
@@ -196,7 +196,7 @@ router.get('/:id', localizacaoController.buscarLocalizacaoPorId);
  *       404:
  *         description: Localização não encontrada
  */
-router.put('/atualizar/:id', localizacaoController.atualizarLocalizacao);
+localizacoesRoutes.put('/atualizar/:id', localizacaoController.atualizarLocalizacao);
 
 /**
  * @swagger
@@ -217,6 +217,6 @@ router.put('/atualizar/:id', localizacaoController.atualizarLocalizacao);
  *       404:
  *         description: Localização não encontrada
  */
-router.delete('/deletar/:id', localizacaoController.deletarLocalizacao);
+localizacoesRoutes.delete('/deletar/:id', localizacaoController.deletarLocalizacao);
 
-export default router;
+export default localizacoesRoutes;

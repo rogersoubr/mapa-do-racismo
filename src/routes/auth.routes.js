@@ -1,10 +1,13 @@
 // Importando o pacote 'express' para criar as rotas
-import express, { Router } from 'express';
+import express from 'express';
 //danado que tem os cruds de auth
-import AuthController from '../controllers/auth.controller';
+import AuthController from '../controllers/auth.controller.js';
 
-const auth = Router();
+import  { authenticateToken } from '../middlewares/authenticate.middlewares.js';
+
+const authRoutes = express.Router();
 // deixei aqui um modelo, para quem for criar o swagger, boa sorte bjs
+
 /**
  * @swagger
  * components:
@@ -70,7 +73,7 @@ const auth = Router();
  * 
  *     responses:
  *       201:
- *         description: user{}
+ *         description: user
  *         content:
  *           application/json:
  *             schema:
@@ -80,15 +83,17 @@ const auth = Router();
  */
 
 //POPST -> CRIAR USUARIO -> auth/criar
-auth.post("/criar", AuthController.criar);
+authRoutes.post("/criar", AuthController.criar);
 
 //POPST ->  LOGIN -> auth/login
-auth.post("/login",AuthController.login);
+authRoutes.post("/login",AuthController.login);
 
 //GET ->    BUSCAR -> auth/eu
-auth.post("/eu",AuthController.eu);
+authRoutes.get("/eu",authenticateToken ,AuthController.eu);
 
 //POPST ->  LOGOUT -> auth/lkogout
-auth.post("/logout",AuthController.logout);
+authRoutes.post("/logout",AuthController.logout);
+
+export default authRoutes;
 
 

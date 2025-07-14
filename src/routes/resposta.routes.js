@@ -2,7 +2,7 @@ import express from 'express';
 
 import respostaController from '../controllers/resposta.controller.js';
 
-const router = express.Router();
+const respostaRoutes = express.Router();
 
 /**
  * @swagger
@@ -49,7 +49,7 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Resposta'
  */
-router.get('/', respostaController.listarRespostas);
+respostaRoutes.get('/', respostaController.listarRespostas);
 
 /**
  * @swagger
@@ -81,7 +81,7 @@ router.get('/', respostaController.listarRespostas);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/criar', respostaController.criarResposta);
+respostaRoutes.post('/criar', respostaController.criarResposta);
 
 /**
  * @swagger
@@ -108,7 +108,7 @@ router.post('/criar', respostaController.criarResposta);
  *       404:
  *         description: Localização não encontrada
  */
-router.get('/localizacao/:localizacaoId', respostaController.listarRespostasPorLocalizacao);
+respostaRoutes.get('/localizacao/:localizacaoId', respostaController.listarRespostasPorLocalizacao);
 
 /**
  * @swagger
@@ -133,7 +133,7 @@ router.get('/localizacao/:localizacaoId', respostaController.listarRespostasPorL
  *       404:
  *         description: Resposta não encontrada
  */
-router.get('/:id', respostaController.buscarRespostaPorId);
+respostaRoutes.get('/:id', respostaController.buscarRespostaPorId);
 
 /**
  * @swagger
@@ -167,7 +167,7 @@ router.get('/:id', respostaController.buscarRespostaPorId);
  *       404:
  *         description: Resposta não encontrada
  */
-router.put('/atualizar/:id', respostaController.atualizarResposta);
+respostaRoutes.put('/atualizar/:id', respostaController.atualizarResposta);
 
 /**
  * @swagger
@@ -188,6 +188,6 @@ router.put('/atualizar/:id', respostaController.atualizarResposta);
  *       404:
  *         description: Resposta não encontrada
  */
-router.delete('/deletar/:id', respostaController.deletarResposta);
+respostaRoutes.delete('/deletar/:id', respostaController.deletarResposta);
 
-export default router;
+export default respostaRoutes;

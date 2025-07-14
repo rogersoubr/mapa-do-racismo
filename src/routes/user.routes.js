@@ -1,15 +1,19 @@
-const { Router } = require('express');
-const userController = require('../controller/user.controller');
-const { authenticateToken } = require('../middleware/auth');
+import express from 'express';
+import  UsuarioController from '../controllers/user.controller.js';
+import  { authenticateToken, requireAdmin } from '../middlewares/authenticate.middlewares.js';
 
-const userRoutes = Router();
+const usuarioRoutes = express.Router();
+
+
 
 // Middleware de autenticação para todas as rotas
-userRoutes.use(authenticateToken);
+usuarioRoutes.use(authenticateToken);//se ta logado
+usuarioRoutes.use(requireAdmin);//se e admim
 
 // Rotas de usuário
-userRoutes.get('/profile', userController.getUserProfile); // Obter perfil do usuário logado
-userRoutes.put('/profile', userController.updateProfile); // Atualizar perfil
-userRoutes.delete('/account', userController.deleteAccount); // Deletar própria conta
+//tem que criar o swagger aqui meus amores
+usuarioRoutes.get('/usuarios', UsuarioController.listarUsuarios); // Obter perfil do usuário logado
+usuarioRoutes.get('/status', UsuarioController.statusRegra); // rota para ler as estatísticas dos usuários
+usuarioRoutes.delete('/deletar/:id', UsuarioController.deletarUsuario); // Deletar por id
 
-module.exports = userRoutes;
+export default usuarioRoutes;

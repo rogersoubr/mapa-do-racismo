@@ -3,9 +3,6 @@ const prisma = new PrismaClient();
 
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { Router, request, response } from 'express';
-import { useActionState } from 'react';
-
 export const AuthController = {
     //CRIAR USUÁRIO -----------------------------------------------------------
     async criar( req, res){

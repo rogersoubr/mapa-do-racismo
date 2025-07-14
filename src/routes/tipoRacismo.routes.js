@@ -1,7 +1,7 @@
 import express from 'express';
 import tipoRacismoController from '../controllers/tipoRacismo.controller.js';
 
-const router = express.Router();
+const tipoRacismoRoutes = express.Router();
 
 /**
  * @swagger
@@ -44,7 +44,7 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/TipoRacismo'
  */
-router.get('/', tipoRacismoController.index);
+tipoRacismoRoutes.get('/', tipoRacismoController.index);
 
 /**
  * @swagger
@@ -69,7 +69,7 @@ router.get('/', tipoRacismoController.index);
  *       404:
  *         description: Tipo de racismo não encontrado
  */
-router.get('/:id', tipoRacismoController.show);
+tipoRacismoRoutes.get('/:id', tipoRacismoController.show);
 
 /**
  * @swagger
@@ -98,7 +98,7 @@ router.get('/:id', tipoRacismoController.show);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/criar', tipoRacismoController.store);
+tipoRacismoRoutes.post('/criar', tipoRacismoController.store);
 
 /**
  * @swagger
@@ -132,7 +132,7 @@ router.post('/criar', tipoRacismoController.store);
  *       404:
  *         description: Tipo de racismo não encontrado
  */
-router.put('/atualizar/:id', tipoRacismoController.update);
+tipoRacismoRoutes.put('/atualizar/:id', tipoRacismoController.update);
 
 /**
  * @swagger
@@ -153,6 +153,6 @@ router.put('/atualizar/:id', tipoRacismoController.update);
  *       404:
  *         description: Tipo de racismo não encontrado
  */
-router.delete('/deletar/:id', tipoRacismoController.delete);
+tipoRacismoRoutes.delete('/deletar/:id', tipoRacismoController.delete);
 
-export default router;
+export default tipoRacismoRoutes;

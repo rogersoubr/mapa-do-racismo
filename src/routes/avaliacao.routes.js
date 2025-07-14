@@ -1,7 +1,7 @@
 import express from 'express';
 import avaliacaoController from '../controllers/avaliacao.controller.js';
 
-const router = express.Router();
+const avaliacaoRoutes = express.Router();
 
 /**
  * @swagger
@@ -52,7 +52,7 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Avaliacao'
  */
-router.get('/', avaliacaoController.listarAvaliacoes);
+avaliacaoRoutes.get('/', avaliacaoController.listarAvaliacoes);
 
 /**
  * @swagger
@@ -89,7 +89,7 @@ router.get('/', avaliacaoController.listarAvaliacoes);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/criar', avaliacaoController.criarAvaliacao);
+avaliacaoRoutes.post('/criar', avaliacaoController.criarAvaliacao);
 
 /**
  * @swagger
@@ -114,7 +114,7 @@ router.post('/criar', avaliacaoController.criarAvaliacao);
  *       404:
  *         description: Avaliação não encontrada
  */
-router.get('/:id', avaliacaoController.buscarAvaliacaoPorId);
+avaliacaoRoutes.get('/:id', avaliacaoController.buscarAvaliacaoPorId);
 
 /**
  * @swagger
@@ -152,7 +152,7 @@ router.get('/:id', avaliacaoController.buscarAvaliacaoPorId);
  *       404:
  *         description: Avaliação não encontrada
  */
-router.put('/atualizar/:id', avaliacaoController.atualizarAvaliacao);
+avaliacaoRoutes.put('/atualizar/:id', avaliacaoController.atualizarAvaliacao);
 
 /**
  * @swagger
@@ -173,6 +173,6 @@ router.put('/atualizar/:id', avaliacaoController.atualizarAvaliacao);
  *       404:
  *         description: Avaliação não encontrada
  */
-router.delete('deletar/:id', avaliacaoController.deletarAvaliacao);
+avaliacaoRoutes.delete('deletar/:id', avaliacaoController.deletarAvaliacao);
 
-export default router;
+export default avaliacaoRoutes;
