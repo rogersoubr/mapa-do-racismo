@@ -13,7 +13,7 @@ const tipoRacismoRoutes = express.Router();
  *         - descricao
  *       properties:
  *         id:
- *           type: integer
+ *           type: string
  *           description: ID único do tipo de racismo
  *         descricao:
  *           type: string

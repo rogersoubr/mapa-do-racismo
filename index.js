@@ -33,7 +33,7 @@ import avaliacaoRoutes from './src/routes/avaliacao.routes.js';
 import respostaRoutes from './src/routes/resposta.routes.js';
 import ocorrenciasRoutes from './src/routes/ocorrencias.routes.js';
 import authRoutes from './src/routes/auth.routes.js'
-import usuarioRoutes from './src/routes/user.routes.js';
+import usuarioRoutes from './src/routes/usuario.routes.js';
 import { logger } from './src/middlewares/logger.middlewares.js';
 import { timeStamp } from 'console';
 
@@ -106,6 +106,7 @@ app.use('/ocorrencias', ocorrenciasRoutes);
 app.use('/auth',authRoutes);
 app.use('/usuario', usuarioRoutes);
 console.log('DEBUG: CHEGOU 1');
+
 // Adicionei aqui a rota raiz para evitar "Cannot GET /"
 app.get('/health', (req, res) => {
   res.json({
@@ -114,11 +115,12 @@ app.get('/health', (req, res) => {
   });
 });
 console.log('DEBUG: CHEGOU 2');
-// Rota 404
 
+/* Rota 404
 app.use((req, res) => {
   return res.status(404).json({ error: `Rota ${req.params.undefinedRoute} não encontrada` });
 });
+*/
 
 console.log('DEBUG: CHEGOU 3');
 

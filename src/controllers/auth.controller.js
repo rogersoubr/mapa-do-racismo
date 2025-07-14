@@ -58,7 +58,7 @@ export const AuthController = {
                 token,
             };
 
-            res.status(201).json(resposta)
+            res.status(201).json({message: "Usuário criado"},resposta)
             //ERRO
         }catch(error){
             console.error("DEBUG: ERRO AO REGISTRAR", error);
@@ -116,7 +116,7 @@ export const AuthController = {
                 },
                 token,
             };
-            res.status(201).json(resposta)
+            res.status(201).json({message:"Logado com sucesso"},resposta)
         }catch(error){
             console.error("DEBUG: ERRO AO REGISTRAR", error);
             res.status(500).json({error: "Erro interno do servidor"})
@@ -125,7 +125,7 @@ export const AuthController = {
 
     //PROCURAR USUARIO --------------------------------------------------------------
     async eu(req, res){
-        res.json({usuario: req.usuario});
+        res.status(200).json({usuario: req.usuario});
     },
 
 
@@ -133,7 +133,7 @@ export const AuthController = {
     //não é async porque sai independente 
     logout(req, res){
         res.clearCookie("authToken");
-        res.json({massage: "Logout realizado!"});
+        res.status(200).json({massage: "Logout realizado!"});
     }
 }
 
