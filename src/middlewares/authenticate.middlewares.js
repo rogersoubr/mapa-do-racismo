@@ -14,7 +14,7 @@ export const authenticateToken = async (req, res, next) =>{
         //pegando usuario no prisma em comparação com o token
         const usuario = await prisma.usuario.findUnique({
             where:{id: decoded.usuarioID},
-            select: {id:true, email: true, regras: true},
+            select: {id:true, email: true, papel: true},
         });
         //se não tiverusuario
         if(!usuario){
@@ -34,7 +34,7 @@ export const requireAdmin = (req, res, next) => {
         return res.status(401).json({error: "Não autentificado"})
     }
 
-    if(req.usuario.regras !== "ADMIN"){
+    if(req.usuario.papel !== "ADMIN"){
         return res.status(403).json({error: "Acesso negado"})
     }
 

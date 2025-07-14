@@ -8,7 +8,7 @@ export const AdminController = {
         select: {
           id: true,
           email: true,
-          regra: true,
+          papel: true,
           createdAt: true,
           updatedAt: true,
         },
@@ -21,11 +21,11 @@ export const AdminController = {
     }
   },
 
-  async statusRegra(req, res) {
+  async statusPapel(req, res) {
     try {
       const totalUsuarios = await prisma.usuario.count();
-      const adminUsuarios = await prisma.usuario.count({ where: { regra: "ADMIN" } });
-      const regularUsuarios = await prisma.usuario.count({ where: { regra: "USER" } });
+      const adminUsuarios = await prisma.usuario.count({ where: { papel: "ADMIN" } });
+      const regularUsuarios = await prisma.usuario.count({ where: { papel: "USER" } });
 
       const status = {
         totalUsuarios,

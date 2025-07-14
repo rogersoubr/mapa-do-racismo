@@ -28,7 +28,7 @@ export const AuthController = {
                 data: {
                     email, 
                     senha: hashSenha,
-                    regra: regra || "USER",
+                    papel: papel || "USER",
                 },
             });
             //gera o JWTtoken que vai mandar para o front
@@ -36,7 +36,7 @@ export const AuthController = {
                 {
                     usuarioID: usuario.id,
                     email: usuario.email,
-                    regra: usuario.regra
+                    papel: usuario.papel
                 },
                 process.env.JWT_SECRET,
                 {expiresIn: "24h"}
@@ -53,7 +53,7 @@ export const AuthController = {
                 usuario:{
                     id: usuario.id,
                     email: usuario.email,
-                    regra: usuario.regra,                
+                    papel: usuario.papel,                
                 },
                 token,
             };
@@ -94,7 +94,7 @@ export const AuthController = {
                 {
                     usuarioID: usuario.id,
                     email: usuario.email,
-                    regra: usuario.regra,
+                    papel: usuario.papel,
                 },
                 process.env.JWT_SECRET,
                 {expiresIn: "24h"}
@@ -112,7 +112,7 @@ export const AuthController = {
                 usuario:{
                     id: usuario.id,
                     email: usuario.email,
-                    regra: usuario.regra,                
+                    papel: usuario.papel,                
                 },
                 token,
             };
