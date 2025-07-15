@@ -80,7 +80,7 @@ adminRoutes.get('/usuarios', AdminController.listarUsuarios); // Obter perfil do
  *                 $ref: '#/components/schemas/TipoRacismo'
  */
 
-adminRoutes.get('/status', AdminController.statusRegra); // rota para ler as estatísticas dos usuários
+adminRoutes.get('/status', AdminController.statusPapel); // rota para ler as estatísticas dos usuários
 
 /**
  * @swagger

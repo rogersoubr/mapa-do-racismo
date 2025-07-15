@@ -12,7 +12,7 @@ enum papelUsuario {
   USER
   ADMIN
 }
-
+//nome          String
 model usuario {
   id            String            @id @default(cuid())
   email         String            @unique
