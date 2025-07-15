@@ -52,7 +52,6 @@ async function main() {
       { descricao: 'Racismo Institucional' },
       { descricao: 'Racismo Ambiental' },
       { descricao: 'Racismo Religioso' },
-      { descricao: 'Xenofobia' },
     ],
     skipDuplicates: true,
   });
@@ -62,12 +61,11 @@ async function main() {
   // Criar localizações
   console.log('📍 Criando localizações...');
   const bairrosSP = [
-    'Sé', 'Liberdade', 'Consolação', 'Bela Vista', 'Vila Mariana',
-    'Pinheiros', 'Vila Madalena', 'Moema', 'Itaim Bibi', 'Jardins'
+    'Sé', 'Liberdade', 'Consolação', 'Bela Vista', 'Vila Mariana'
   ];
 
   const localizacoes = [];
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 5; i++) {
     const tipoIndex = i % tipos.length;
     const bairroIndex = i % bairrosSP.length;
     
@@ -90,7 +88,7 @@ async function main() {
   const statusList = ['aberta', 'em análise', 'fechada'];
   const ocorrencias = [];
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 10; i++) {
     const localizacaoIndex = i % localizacoes.length;
     const tipoIndex = i % tipos.length;
     const statusIndex = i % statusList.length;
@@ -110,7 +108,7 @@ async function main() {
   console.log('💬 Criando respostas...');
   const nomesUsuarios = ['João', 'Maria', 'Pedro', 'Ana', 'Carlos'];
   
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 10; i++) {
     const ocorrenciaIndex = i % ocorrencias.length;
     const localizacaoId = ocorrencias[ocorrenciaIndex].localizacaoId;
     const nomeIndex = i % nomesUsuarios.length;
@@ -129,7 +127,7 @@ async function main() {
   console.log('⭐ Criando avaliações...');
   const usuariosDb = await prisma.usuario.findMany();
   
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 10; i++) {
     const ocorrenciaIndex = i % ocorrencias.length;
     const tipoIndex = ocorrencias[ocorrenciaIndex].tipoRacismoId;
     const usuarioIndex = i % usuariosDb.length;
