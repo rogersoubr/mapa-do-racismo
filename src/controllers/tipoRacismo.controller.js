@@ -36,7 +36,7 @@ export const tipoRacismoController = {
       const { id } = req.params;
       
       const tipo = await prisma.tipoRacismo.findUnique({
-        where: { id: parseInt(id) },
+        where: { id},
         include: {
           _count: {
             select: {
@@ -129,7 +129,7 @@ export const tipoRacismoController = {
 
       // Verificar se o tipo existe
       const tipoExistente = await prisma.tipoRacismo.findUnique({
-        where: { id: parseInt(id) }
+        where: { id }
       });
 
       if (!tipoExistente) {
@@ -139,7 +139,7 @@ export const tipoRacismoController = {
       // Verificar se já existe outro tipo com a mesma descrição (case insensitive)
       const tipoComMesmaDescricao = await prisma.tipoRacismo.findFirst({
         where: {
-          id: { not: parseInt(id) },
+          id: { not: id },
           descricao: {
             equals: descricao.trim(),
             mode: 'insensitive'
@@ -155,7 +155,7 @@ export const tipoRacismoController = {
 
       // Atualizar o tipo
       const tipoAtualizado = await prisma.tipoRacismo.update({
-        where: { id: parseInt(id) },
+        where: { id},
         data: {
           descricao: descricao.trim()
         },
@@ -186,7 +186,7 @@ export const tipoRacismoController = {
       
       // Verificar se o tipo existe
       const tipo = await prisma.tipoRacismo.findUnique({
-        where: { id: parseInt(id) },
+        where: { id },
         include: {
           _count: {
             select: {
@@ -210,7 +210,7 @@ export const tipoRacismoController = {
 
       // Excluir o tipo
       await prisma.tipoRacismo.delete({
-        where: { id: parseInt(id) }
+        where: { id }
       });
       
       return res.status(204).send();

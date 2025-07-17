@@ -33,7 +33,7 @@ export const respostaController = {
 
       // Verificar se a localização existe
       const localizacao = await prisma.localizacao.findUnique({
-        where: { id: parseInt(localizacaoId) }
+        where: { id: localizacaoId }
       });
 
       if (!localizacao) {
@@ -68,7 +68,7 @@ export const respostaController = {
       
       const resposta = await prisma.resposta.findUnique({
         where: {
-          id: parseInt(id)
+          id
         },
         include: {
           localizacao: true
@@ -97,7 +97,7 @@ export const respostaController = {
 
       // Verificar se a resposta existe
       const respostaExistente = await prisma.resposta.findUnique({
-        where: { id: parseInt(id) }
+        where: { id }
       });
 
       if (!respostaExistente) {
@@ -109,7 +109,7 @@ export const respostaController = {
       if (usuario) dadosAtualizacao.usuario = usuario;
 
       const respostaAtualizada = await prisma.resposta.update({
-        where: { id: parseInt(id) },
+        where: { id },
         data: dadosAtualizacao,
         include: {
           localizacao: true
@@ -133,7 +133,7 @@ export const respostaController = {
 
         // Verificar se a resposta existe
         const resposta = await prisma.resposta.findUnique({
-          where: { id: parseInt(id) }
+          where: { id }
         });
 
         if (!resposta) {
@@ -141,7 +141,7 @@ export const respostaController = {
         }
 
         await prisma.resposta.delete({
-          where: { id: parseInt(id) }
+          where: { id }
         });
 
         res.status(204).send();
@@ -159,7 +159,7 @@ export const respostaController = {
       const { localizacaoId } = req.params;
       
       const respostas = await prisma.resposta.findMany({
-        where: { localizacaoId: parseInt(localizacaoId) },
+        where: { localizacaoId },
         include: {
           localizacao: true
         },

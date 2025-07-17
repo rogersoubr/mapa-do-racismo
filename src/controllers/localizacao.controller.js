@@ -60,7 +60,7 @@ export const localizacaoController ={
 
       // Verificar se o tipo de racismo existe
       const tipoRacismo = await prisma.tipoRacismo.findUnique({
-        where: { id: parseInt(tipoRacismoId) }
+        where: { id: tipoRacismoId }
       });
 
       if (!tipoRacismo) {
@@ -78,7 +78,7 @@ export const localizacaoController ={
           longitude: longitude,
           bairro: bairro ? bairro.trim() : null,
           rua: rua ? rua.trim() : null,
-          tipoRacismoId: parseInt(tipoRacismoId)
+          tipoRacismoId: tipoRacismoId
         },
         include: {
           tipoRacismo: {
@@ -121,7 +121,7 @@ export const localizacaoController ={
 
       // Verificar se a localização existe
       const localizacaoExistente = await prisma.localizacao.findUnique({
-        where: { id: parseInt(id) }
+        where: { id }
       });
 
       if (!localizacaoExistente) {
@@ -133,7 +133,7 @@ export const localizacaoController ={
       // Verificar se o tipo de racismo existe, se for fornecido
       if (tipoRacismoId) {
         const tipoRacismo = await prisma.tipoRacismo.findUnique({
-          where: { id: parseInt(tipoRacismoId) }
+          where: { id: tipoRacismoId }
         });
 
         if (!tipoRacismo) {
@@ -167,7 +167,7 @@ export const localizacaoController ={
 
       // Atualizar a localização
       const localizacaoAtualizada = await prisma.localizacao.update({
-        where: { id: parseInt(id) },
+        where: { id: id },
         data: {
           nome: nome !== undefined ? nome.trim() : localizacaoExistente.nome,
           descricao: descricao !== undefined ? descricao.trim() : localizacaoExistente.descricao,
@@ -175,7 +175,7 @@ export const localizacaoController ={
           longitude: lng,
           bairro: bairro !== undefined ? (bairro ? bairro.trim() : null) : localizacaoExistente.bairro,
           rua: rua !== undefined ? (rua ? rua.trim() : null) : localizacaoExistente.rua,
-          tipoRacismoId: tipoRacismoId ? parseInt(tipoRacismoId) : localizacaoExistente.tipoRacismoId
+          tipoRacismoId: tipoRacismoId ? tipoRacismoId : localizacaoExistente.tipoRacismoId
         },
         include: {
           tipoRacismo: {
@@ -209,7 +209,7 @@ export const localizacaoController ={
 
       // Verificar se a localização existe
       const localizacao = await prisma.localizacao.findUnique({
-        where: { id: parseInt(id) },
+        where: { id },
         include: {
           _count: {
             select: {
@@ -228,7 +228,7 @@ export const localizacaoController ={
 
       // Excluir a localização (as relações em cascata serão tratadas pelo Prisma)
       await prisma.localizacao.delete({
-        where: { id: parseInt(id) }
+        where: { id }
       });
 
       res.status(204).send();
@@ -247,7 +247,7 @@ export const localizacaoController ={
       const { id } = req.params;
 
       const localizacao = await prisma.localizacao.findUnique({
-        where: { id: parseInt(id) },
+        where: { id },
         include: {
           tipoRacismo: {
             select: {
@@ -291,7 +291,7 @@ export const localizacaoController ={
 
       const localizacoes = await prisma.localizacao.findMany({
         where: { 
-          tipoRacismoId: parseInt(tipoRacismoId) 
+          tipoRacismoId: tipoRacismoId
         },
         include: {
           tipoRacismo: {

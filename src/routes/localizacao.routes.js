@@ -140,7 +140,7 @@ localizacoesRoutes.post('/criar', localizacaoController.criarLocalizacao);
  *               items:
  *                 $ref: '#/components/schemas/Localizacao'
  */
-localizacoesRoutes.get('/tipo/:tipoRacismoId', localizacaoController.buscarLocalizacaoPorId);
+localizacoesRoutes.get('/tipo/:tipoRacismoId', localizacaoController.buscarLocalizacoesPorTipo);
 
 /**
  * @swagger

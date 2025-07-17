@@ -44,7 +44,7 @@ export const ocorrenciasController = {
         try {
             const { id } = req.params;
             const ocorrencias = await prisma.ocorrencias.findUnique({
-                where: { id: Number(id) },
+                where: { id },
                 include: {
                     localizacao: true,
                     tipoRacismo: true,
@@ -67,7 +67,7 @@ export const ocorrenciasController = {
             const { descricao, status, localizacaoId, tipoRacismoId } = req.body;
 
             const ocorrencias = await prisma.ocorrencias.update({
-                where: { id: Number(id) },
+                where: { id: id },
                 data: {
                     descricao,
                     status,
@@ -87,7 +87,7 @@ export const ocorrenciasController = {
         try {
             const { id } = req.params;
             await prisma.ocorrencias.delete({
-                where: { id: Number(id) },
+                where: { id: id },
             });
             res.json({ message: "Ocorrência removida com sucesso" });
         } catch (error) {

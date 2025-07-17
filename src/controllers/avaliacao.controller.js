@@ -34,7 +34,7 @@ export const avaliacaoController = {
 
       // Verificar se o tipo de racismo existe
       const tipoRacismo = await prisma.tipoRacismo.findUnique({
-        where: { id: parseInt(tipoRacismoId) }
+        where: { id: tipoRacismoId }
       });
 
       if (!tipoRacismo) {
@@ -46,7 +46,7 @@ export const avaliacaoController = {
           usuario,
           comentario,
           nota: Number(nota),
-          tipoRacismoId: parseInt(tipoRacismoId)
+          tipoRacismoId: tipoRacismoId
         },
         include: {
           tipoRacismo: true
@@ -64,7 +64,7 @@ export const avaliacaoController = {
     try {
       const { id } = req.params;
       const avaliacao = await prisma.avaliacao.findUnique({
-        where: { id: parseInt(id) },
+        where: { id },
         include: {
           tipoRacismo: true
         }
@@ -89,7 +89,7 @@ export const avaliacaoController = {
 
       // Verificar se a avaliação existe
       const avaliacaoExistente = await prisma.avaliacao.findUnique({
-        where: { id: parseInt(id) }
+        where: { id }
       });
 
       if (!avaliacaoExistente) {
@@ -99,7 +99,7 @@ export const avaliacaoController = {
       // Verificar se o tipo de racismo existe
       if (tipoRacismoId) {
         const tipoRacismo = await prisma.tipoRacismo.findUnique({
-          where: { id: parseInt(tipoRacismoId) }
+          where: { id: tipoRacismoId }
         });
 
         if (!tipoRacismo) {
@@ -111,10 +111,10 @@ export const avaliacaoController = {
       if (usuario) dadosAtualizacao.usuario = usuario;
       if (comentario) dadosAtualizacao.comentario = comentario;
       if (nota !== undefined) dadosAtualizacao.nota = Number(nota);
-      if (tipoRacismoId) dadosAtualizacao.tipoRacismoId = parseInt(tipoRacismoId);
+      if (tipoRacismoId) dadosAtualizacao.tipoRacismoId = tipoRacismoId;
 
       const avaliacaoAtualizada = await prisma.avaliacao.update({
-        where: { id: parseInt(id) },
+        where: { id: id },
         data: dadosAtualizacao,
         include: {
           tipoRacismo: true
@@ -135,7 +135,7 @@ export const avaliacaoController = {
 
       // Verificar se a avaliação existe
       const avaliacao = await prisma.avaliacao.findUnique({
-        where: { id: parseInt(id) }
+        where: { id }
       });
 
       if (!avaliacao) {
@@ -143,7 +143,7 @@ export const avaliacaoController = {
       }
 
       await prisma.avaliacao.delete({
-        where: { id: parseInt(id) }
+        where: { id: id }
       });
 
       res.status(204).send();
