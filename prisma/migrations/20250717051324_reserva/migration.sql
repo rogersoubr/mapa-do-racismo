@@ -20,9 +20,9 @@ CREATE TABLE "localizacao" (
     "descricao" TEXT NOT NULL,
     "bairro" TEXT,
     "rua" TEXT,
-    "latitude" DOUBLE PRECISION NOT NULL,
-    "longitude" DOUBLE PRECISION NOT NULL,
-    "tipoRacismoId" TEXT NOT NULL,
+    "latitude" DOUBLE PRECISION,
+    "longitude" DOUBLE PRECISION,
+    "tipoRacismoId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -45,8 +45,8 @@ CREATE TABLE "ocorrencias" (
     "descricao" TEXT NOT NULL,
     "data" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "status" TEXT NOT NULL DEFAULT 'aberta',
-    "localizacaoId" TEXT NOT NULL,
-    "tipoRacismoId" TEXT NOT NULL,
+    "localizacaoId" TEXT,
+    "tipoRacismoId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -58,8 +58,8 @@ CREATE TABLE "resposta" (
     "id" TEXT NOT NULL,
     "comentario" TEXT NOT NULL,
     "usuario" TEXT NOT NULL,
-    "localizacaoId" TEXT NOT NULL,
-    "ocorrenciaId" TEXT NOT NULL,
+    "localizacaoId" TEXT,
+    "ocorrenciaId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -72,8 +72,8 @@ CREATE TABLE "avaliacao" (
     "usuario" TEXT NOT NULL,
     "comentario" TEXT NOT NULL,
     "nota" INTEGER NOT NULL DEFAULT 0,
-    "tipoRacismoId" TEXT NOT NULL,
-    "ocorrenciaId" TEXT NOT NULL,
+    "tipoRacismoId" TEXT,
+    "ocorrenciaId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -105,22 +105,22 @@ CREATE INDEX "avaliacao_tipoRacismoId_idx" ON "avaliacao"("tipoRacismoId");
 CREATE INDEX "avaliacao_ocorrenciaId_idx" ON "avaliacao"("ocorrenciaId");
 
 -- AddForeignKey
-ALTER TABLE "localizacao" ADD CONSTRAINT "localizacao_tipoRacismoId_fkey" FOREIGN KEY ("tipoRacismoId") REFERENCES "tipoRacismo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "localizacao" ADD CONSTRAINT "localizacao_tipoRacismoId_fkey" FOREIGN KEY ("tipoRacismoId") REFERENCES "tipoRacismo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ocorrencias" ADD CONSTRAINT "ocorrencias_localizacaoId_fkey" FOREIGN KEY ("localizacaoId") REFERENCES "localizacao"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ocorrencias" ADD CONSTRAINT "ocorrencias_localizacaoId_fkey" FOREIGN KEY ("localizacaoId") REFERENCES "localizacao"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ocorrencias" ADD CONSTRAINT "ocorrencias_tipoRacismoId_fkey" FOREIGN KEY ("tipoRacismoId") REFERENCES "tipoRacismo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ocorrencias" ADD CONSTRAINT "ocorrencias_tipoRacismoId_fkey" FOREIGN KEY ("tipoRacismoId") REFERENCES "tipoRacismo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "resposta" ADD CONSTRAINT "resposta_localizacaoId_fkey" FOREIGN KEY ("localizacaoId") REFERENCES "localizacao"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "resposta" ADD CONSTRAINT "resposta_localizacaoId_fkey" FOREIGN KEY ("localizacaoId") REFERENCES "localizacao"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "resposta" ADD CONSTRAINT "resposta_ocorrenciaId_fkey" FOREIGN KEY ("ocorrenciaId") REFERENCES "ocorrencias"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "resposta" ADD CONSTRAINT "resposta_ocorrenciaId_fkey" FOREIGN KEY ("ocorrenciaId") REFERENCES "ocorrencias"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "avaliacao" ADD CONSTRAINT "avaliacao_tipoRacismoId_fkey" FOREIGN KEY ("tipoRacismoId") REFERENCES "tipoRacismo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "avaliacao" ADD CONSTRAINT "avaliacao_tipoRacismoId_fkey" FOREIGN KEY ("tipoRacismoId") REFERENCES "tipoRacismo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "avaliacao" ADD CONSTRAINT "avaliacao_ocorrenciaId_fkey" FOREIGN KEY ("ocorrenciaId") REFERENCES "ocorrencias"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "avaliacao" ADD CONSTRAINT "avaliacao_ocorrenciaId_fkey" FOREIGN KEY ("ocorrenciaId") REFERENCES "ocorrencias"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -51,21 +51,12 @@ export const localizacaoController ={
       } = req.body;
       
       // Validação dos campos obrigatórios
-      if (!nome || !descricao || !latitude || !longitude || !tipoRacismoId) {
+      if (!nome || !descricao || !tipoRacismoId) {
         return res.status(400).json({ 
-          error: 'Nome, descrição, latitude, longitude e tipo de racismo são obrigatórios' 
+          error: 'Nome, descrição e tipo de racismo são obrigatórios' 
         });
       }
 
-      // Validação do formato das coordenadas
-      const lat = parseFloat(latitude);
-      const lng = parseFloat(longitude);
-      
-      if (isNaN(lat) || isNaN(lng)) {
-        return res.status(400).json({ 
-          error: 'Latitude e longitude devem ser números válidos' 
-        });
-      }
 
       // Verificar se o tipo de racismo existe
       const tipoRacismo = await prisma.tipoRacismo.findUnique({
@@ -83,8 +74,8 @@ export const localizacaoController ={
         data: {
           nome: nome.trim(),
           descricao: descricao.trim(),
-          latitude: lat,
-          longitude: lng,
+          latitude: latitude,
+          longitude: longitude,
           bairro: bairro ? bairro.trim() : null,
           rua: rua ? rua.trim() : null,
           tipoRacismoId: parseInt(tipoRacismoId)

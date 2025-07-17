@@ -30,10 +30,10 @@ model localizacao {
   descricao     String
   bairro        String?
   rua           String?
-  latitude      Float
-  longitude     Float
-  tipoRacismo   tipoRacismo         @relation(fields: [tipoRacismoId], references: [id])
-  tipoRacismoId String
+  latitude      Float?
+  longitude     Float?
+  tipoRacismo   tipoRacismo?         @relation(fields: [tipoRacismoId], references: [id])
+  tipoRacismoId String?
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
   respostas     resposta[]
@@ -58,10 +58,10 @@ model ocorrencias {
   descricao      String
   data           DateTime         @default(now())
   status         String           @default("aberta")
-  localizacaoId  String
-  localizacao    localizacao      @relation(fields: [localizacaoId], references: [id])
-  tipoRacismoId  String
-  tipoRacismo    tipoRacismo      @relation(fields: [tipoRacismoId], references: [id])
+  localizacaoId  String?
+  localizacao    localizacao?      @relation(fields: [localizacaoId], references: [id])
+  tipoRacismoId  String?
+  tipoRacismo    tipoRacismo?      @relation(fields: [tipoRacismoId], references: [id])
   respostas      resposta[]
   avaliacoes     avaliacao[]
   createdAt      DateTime         @default(now())
@@ -75,10 +75,10 @@ model resposta {
   id            String              @id @default(cuid())
   comentario    String
   usuario       String
-  localizacao   localizacao         @relation(fields: [localizacaoId], references: [id])
-  localizacaoId String
-  ocorrencia    ocorrencias         @relation(fields: [ocorrenciaId], references: [id])
-  ocorrenciaId  String
+  localizacao   localizacao?         @relation(fields: [localizacaoId], references: [id])
+  localizacaoId String?
+  ocorrencia    ocorrencias?         @relation(fields: [ocorrenciaId], references: [id])
+  ocorrenciaId  String?
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
 
@@ -91,10 +91,10 @@ model avaliacao {
   usuario       String
   comentario    String
   nota          Int                 @default(0)
-  tipoRacismo   tipoRacismo         @relation(fields: [tipoRacismoId], references: [id])
-  tipoRacismoId String
-  ocorrencia    ocorrencias         @relation(fields: [ocorrenciaId], references: [id])
-  ocorrenciaId  String
+  tipoRacismo   tipoRacismo?         @relation(fields: [tipoRacismoId], references: [id])
+  tipoRacismoId String?
+  ocorrencia    ocorrencias?         @relation(fields: [ocorrenciaId], references: [id])
+  ocorrenciaId  String?
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
 
