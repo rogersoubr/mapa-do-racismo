@@ -16,7 +16,6 @@ API para mapeamento e documentação de casos de racismo no Brasil.
 - [Licença](#licença)
 
 ## 🔧 Requisitos
-
 - Node.js (versão 16 ou superior)
 - npm (geralmente vem com o Node.js)
 - Python 3.x (para MkDocs)

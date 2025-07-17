@@ -72,6 +72,43 @@ localizacoesRoutes.get('/', localizacaoController.listarLocalizacoes);
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Localizacao:
+ *       type: object
+ *       required:
+ *         - nome
+ *         - descricao
+ *         - latitude
+ *         - longitude
+ *         - tipoRacismoId
+ *         - bairro
+ *         - rua
+ *       properties:
+ *         nome:
+ *           type: string
+ *           example: Praça da Liberdade
+ *         descricao:
+ *           type: string
+ *           example: Local onde houve um caso de racismo institucional
+ *         latitude:
+ *           type: number
+ *           format: float
+ *           example: -23.55052
+ *         longitude:
+ *           type: number
+ *           format: float
+ *           example: -46.633308
+ *         tipoRacismoId:
+ *           type: integer
+ *           example: 2
+ *         bairro:
+ *           type: string
+ *           example: Centro
+ *         rua:
+ *           type: string
+ *           example: Av. Paulista
+ *
  * /localizacoes/criar:
  *   post:
  *     summary: Cria uma nova localização
@@ -92,6 +129,7 @@ localizacoesRoutes.get('/', localizacaoController.listarLocalizacoes);
  *       400:
  *         description: Dados inválidos
  */
+
 localizacoesRoutes.post('/criar', localizacaoController.criarLocalizacao);
 
 /**

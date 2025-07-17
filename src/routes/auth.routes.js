@@ -43,6 +43,43 @@ const authRoutes = express.Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     CriarUsuario:
+ *       type: object
+ *       required:
+ *         - email
+ *         - senha
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: usuario@exemplo.com
+ *         senha:
+ *           type: string
+ *           example: senhaSegura123
+ *         papel:
+ *           type: string
+ *           example: USER
+ *
+ *     AuthResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: Usuário criado
+ *         usuario:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             email:
+ *               type: string
+ *             papel:
+ *               type: string
+ *         token:
+ *           type: string
+ *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *
  * /auth/criar:
  *   post:
  *     summary: Cria um novo usuário
@@ -52,34 +89,16 @@ const authRoutes = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - email
- *               - senha
- *               - regra
- *             properties:
- *               id:
- *                 type: string
- *               email:
- *                 type: string
- *               senha:
- *                 type: string
- *               regra:
- *                 type: string
- *               createdAt:
- *                 type: string
- *               updatedAt:
- *                 type: string
- * 
+ *             $ref: '#/components/schemas/CriarUsuario'
  *     responses:
  *       201:
- *         description: Usuário criado, usuario
+ *         description: Usuário criado com sucesso
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Auth'
+ *               $ref: '#/components/schemas/AuthResponse'
  *       400:
- *         description: Email e senha devem ser colocados! 
+ *         description: Email e senha devem ser colocados!
  */
 
 //POPST -> CRIAR USUARIO -> auth/criar
@@ -124,24 +143,70 @@ authRoutes.post("/login",AuthController.login);
 
 /**
  * @swagger
- * /auth/eu:
- *   get:
- *     summary: Retorna o usuario logado do token
+ * components:
+ *   schemas:
+ *     LoginUsuario:
+ *       type: object
+ *       required:
+ *         - email
+ *         - senha
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: usuario@exemplo.com
+ *         senha:
+ *           type: string
+ *           example: senha123segura
+ * 
+ *     LoginResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: Logado com sucesso
+ *         usuario:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             email:
+ *               type: string
+ *             papel:
+ *               type: string
+ *         token:
+ *           type: string
+ *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *
+ * /auth/login:
+ *   post:
+ *     summary: Faz login de um usuário
  *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/LoginUsuario'
  *     responses:
- *       200:
- *         description: Dados do usuario
+ *       201:
+ *         description: Logado com sucesso
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               items:
- *                 $ref: '#/components/schemas/Auth'
+ *               $ref: '#/components/schemas/LoginResponse'
+ *       400:
+ *         description: Email e senha devem ser colocados!
+ *       500:
+ *         description: Erro interno do servidor
  */
+
 
 //GET ->    BUSCAR -> auth/eu
 authRoutes.get("/eu",authenticateToken ,AuthController.eu);
 
+
+//POPST ->  LOGOUT -> auth/lkogout
+authRoutes.post("/logout",AuthController.logout);
 /**
  * @swagger
  * /auth/logouth:
@@ -175,8 +240,7 @@ authRoutes.get("/eu",authenticateToken ,AuthController.eu);
  *               $ref: '#/components/schemas/Auth'
  */
 
-//POPST ->  LOGOUT -> auth/lkogout
-authRoutes.post("/logout",AuthController.logout);
+
 
 export default authRoutes;
 
